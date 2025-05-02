@@ -46,7 +46,7 @@ npm run build
 
 각 게임의 설정은 다음 파일에서 수정 가능합니다:
 
-- 상식 퀴즈: `src/features/game1/config/triviaQuestions.ts`
-- 영화 퀴즈: `src/features/game2/config/movieQuestions.ts`
-- 얼굴 줌 아웃 퀴즈: `src/features/game3/config/faceZoomQuestions.ts`
-- 사진 연도 퀴즈: `src/features/game4/config/photoYearQuestions.ts`
+- 상식 퀴즈: `src/features/trivia-quiz/config/triviaQuestions.ts`
+- 영화 퀴즈: `src/features/movie-quiz/config/movieQuestions.ts`
+- 얼굴 줌 아웃 퀴즈: `src/features/face-zoom-quiz/config/faceZoomQuestions.ts`
+- 사진 연도 퀴즈: `src/features/photo-year-quiz/config/photoYearQuestions.ts`
