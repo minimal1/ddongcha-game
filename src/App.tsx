@@ -4,10 +4,10 @@ import Dashboard from './shared/ui/Dashboard';
 import './App.css';
 
 // 게임 컴포넌트 임포트
-import TriviaQuiz from './features/game1/ui/TriviaQuiz';
-import MovieQuiz from './features/game2/ui/MovieQuiz';
-import FaceZoomQuiz from './features/game3/ui/FaceZoomQuiz';
-import PhotoYearQuiz from './features/game4/ui/PhotoYearQuiz';
+import TriviaQuiz from './features/trivia-quiz/ui/TriviaQuiz';
+import MovieQuiz from './features/movie-quiz/ui/MovieQuiz';
+import FaceZoomQuiz from './features/face-zoom-quiz/ui/FaceZoomQuiz';
+import PhotoYearQuiz from './features/photo-year-quiz/ui/PhotoYearQuiz';
 
 const App: React.FC = () => {
   return (
