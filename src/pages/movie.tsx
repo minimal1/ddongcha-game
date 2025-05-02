@@ -18,11 +18,8 @@ const MovieQuizPage: NextPage = () => {
     currentQuestionIndex,
     quizState,
     timeRemaining,
-    score,
-    userAnswer,
-    isCorrect,
     startQuiz,
-    submitAnswer,
+    showAnswer,
     nextQuestion,
     resetQuiz
   } = useQuiz<MovieQuestion>({
@@ -81,17 +78,10 @@ const MovieQuizPage: NextPage = () => {
           </div>
         </div>
         
-        <div className={styles.optionsGrid}>
-          {currentQuestion.options && currentQuestion.options.map((option, index) => (
-            <button
-              key={index}
-              className={styles.optionButton}
-              onClick={() => submitAnswer(option)}
-            >
-              {option}
-            </button>
-          ))}
-        </div>
+       
+        <button className={styles.primaryButton} onClick={showAnswer}>
+          정답 보기
+        </button>
       </div>
     );
   };
@@ -102,13 +92,9 @@ const MovieQuizPage: NextPage = () => {
     
     return (
       <div className={styles.answerScreen}>
-        <h2 className={isCorrect ? styles.correctAnswer : styles.wrongAnswer}>
-          {isCorrect ? '정답입니다! 👏' : '틀렸습니다! 😢'}
-        </h2>
         <div className={styles.answerDetails}>
           <p>{currentQuestion.type === 'title' ? '영화 설명' : '영화 제목'}: <strong>{currentQuestion.content}</strong></p>
           <p>정답: <strong>{currentQuestion.correctAnswer}</strong></p>
-          {userAnswer && <p>제출한 답: <strong>{userAnswer}</strong></p>}
         </div>
         <button className={styles.primaryButton} onClick={nextQuestion}>
           {currentQuestionIndex < questions.length - 1 ? '다음 문제' : '결과 보기'}
@@ -120,12 +106,8 @@ const MovieQuizPage: NextPage = () => {
   // 결과 화면 렌더링
   const renderResultScreen = () => (
     <div className={styles.resultScreen}>
-      <h2>퀴즈 결과</h2>
-      <div className={styles.scoreDisplay}>
-        <p>총점: <strong>{score}/{questions.length}</strong></p>
-        <p>정답률: <strong>{Math.round((score / questions.length) * 100)}%</strong></p>
-      </div>
-      <button className={styles.primaryButton} onClick={resetQuiz}>다시 시작하기</button>
+      <h2>퀴즈 종료</h2>
+            <button className={styles.primaryButton} onClick={resetQuiz}>다시 시작하기</button>
     </div>
   );
 

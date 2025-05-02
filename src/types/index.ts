@@ -9,7 +9,7 @@ export interface TriviaQuestion {
 // 영화 퀴즈 문제
 export interface MovieQuestion {
   id: number;
-  type: 'title' | 'quote';
+  type: "title" | "quote";
   content: string;
   correctAnswer: string;
   options: string[];

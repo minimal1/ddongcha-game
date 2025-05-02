@@ -19,11 +19,8 @@ const PhotoYearQuizPage: NextPage = () => {
     currentQuestionIndex,
     quizState,
     timeRemaining,
-    score,
-    userAnswer,
-    isCorrect,
     startQuiz,
-    submitAnswer,
+    showAnswer,
     nextQuestion,
     resetQuiz
   } = useQuiz<PhotoYearQuestion>({
@@ -81,22 +78,12 @@ const PhotoYearQuizPage: NextPage = () => {
         
         <div className={styles.questionText}>
           <p>이 사진은 언제 촬영되었을까요?</p>
-          <p className={styles.yearRange}>
-            ({currentQuestion.minYear} ~ {currentQuestion.maxYear} 사이)
-          </p>
         </div>
         
-        <div className={styles.optionsGrid}>
-          {currentQuestion.options.map((option, index) => (
-            <button
-              key={index}
-              className={styles.optionButton}
-              onClick={() => submitAnswer(option)}
-            >
-              {option}년
-            </button>
-          ))}
-        </div>
+       
+        <button className={styles.primaryButton} onClick={showAnswer}>
+          정답 보기
+        </button>
       </div>
     );
   };
@@ -107,10 +94,6 @@ const PhotoYearQuizPage: NextPage = () => {
     
     return (
       <div className={styles.answerScreen}>
-        <h2 className={isCorrect ? styles.correctAnswer : styles.wrongAnswer}>
-          {isCorrect ? '정답입니다! 👏' : '틀렸습니다! 😔'}
-        </h2>
-        
         <div className={styles.photoAnswerContainer}>
           <div className={styles.imagePlaceholder}>
             [이미지: {currentQuestion.imagePath}]
@@ -119,7 +102,6 @@ const PhotoYearQuizPage: NextPage = () => {
         
         <div className={styles.answerDetails}>
           <p>정답: <strong>{currentQuestion.correctAnswer}년</strong></p>
-          {userAnswer !== null && <p>선택한 답: <strong>{userAnswer}년</strong></p>}
         </div>
         
         <button className={styles.primaryButton} onClick={nextQuestion}>
@@ -132,11 +114,7 @@ const PhotoYearQuizPage: NextPage = () => {
   // 결과 화면 렌더링
   const renderResultScreen = () => (
     <div className={styles.resultScreen}>
-      <h2>퀴즈 결과</h2>
-      <div className={styles.scoreDisplay}>
-        <p>점수: <strong>{score}/{questions.length}</strong></p>
-        <p>정답률: <strong>{Math.round((score / questions.length) * 100)}%</strong></p>
-      </div>
+      <h2>퀴즈 종료</h2>
       <button className={styles.primaryButton} onClick={resetQuiz}>다시 시작하기</button>
     </div>
   );
