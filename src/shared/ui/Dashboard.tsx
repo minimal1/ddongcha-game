@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import './Dashboard.css';
+import Link from 'next/link';
 
 const Dashboard: React.FC = () => {
   const games = [
@@ -37,7 +37,7 @@ const Dashboard: React.FC = () => {
       
       <div className="games-grid">
         {games.map(game => (
-          <Link to={`/${game.id}`} className="game-card" key={game.id}>
+          <Link href={`/${game.id}`} className="game-card" key={game.id}>
             <div className="game-icon">{game.icon}</div>
             <h2 className="game-title">{game.title}</h2>
             <p className="game-description">{game.description}</p>
