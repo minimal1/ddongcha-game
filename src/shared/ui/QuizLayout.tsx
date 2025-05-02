@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import './QuizLayout.css';
 
 interface QuizLayoutProps {
@@ -35,7 +35,7 @@ const QuizLayout: React.FC<QuizLayoutProps> = ({
             <span>남은 시간: {timeRemaining}초</span>
           </div>
         )}
-        <Link to="/" className="back-button" onClick={onBackToDashboard}>
+        <Link href="/" className="back-button" onClick={onBackToDashboard}>
           ← 대시보드로 돌아가기
         </Link>
       </header>
