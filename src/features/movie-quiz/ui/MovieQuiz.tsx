@@ -1,7 +1,7 @@
 import React from 'react';
-import QuizLayout from 'shared/ui/QuizLayout';
-import { QuizState } from 'shared/lib/types';
-import { useQuiz } from 'shared/lib/useQuiz';
+import QuizLayout from '@/shared/ui/QuizLayout';
+import { QuizState } from '@/shared/lib/types';
+import { useQuiz } from '@/shared/lib/useQuiz';
 import { movieQuestions, MOVIE_QUIZ_TIME_LIMIT } from '../config/movieQuestions';
 import './MovieQuiz.css';
 

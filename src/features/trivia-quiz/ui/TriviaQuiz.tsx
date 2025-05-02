@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import QuizLayout from 'shared/ui/QuizLayout';
-import { QuizState } from 'shared/lib/types';
-import { useQuiz } from 'shared/lib/useQuiz';
+import QuizLayout from '@/shared/ui/QuizLayout';
+import { QuizState } from '@/shared/lib/types';
+import { useQuiz } from '@/shared/lib/useQuiz';
 import { triviaQuestions, TRIVIA_TIME_LIMIT } from '../config/triviaQuestions';
 import './TriviaQuiz.css';
 

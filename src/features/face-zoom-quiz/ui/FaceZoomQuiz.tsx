@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import QuizLayout from 'shared/ui/QuizLayout';
-import { QuizState } from 'shared/lib/types';
-import { useQuiz } from 'shared/lib/useQuiz';
+import QuizLayout from '@/shared/ui/QuizLayout';
+import { QuizState } from '@/shared/lib/types';
+import { useQuiz } from '@/shared/lib/useQuiz';
 import { faceZoomQuestions, FACE_ZOOM_TIME_LIMIT, ZOOM_INTERVAL } from '../config/faceZoomQuestions';
 import './FaceZoomQuiz.css';
 
