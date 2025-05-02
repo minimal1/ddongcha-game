@@ -13,7 +13,7 @@
 
 - React
 - TypeScript
-- React Router
+- Next
 
 ## 시작 방법
 
@@ -24,7 +24,7 @@
 npm install
 
 # 로컬 서버 시작
-npm start
+npm run dev
 ```
 
 ### 배포
