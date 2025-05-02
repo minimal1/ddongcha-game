@@ -33,30 +33,13 @@ npm run dev
 npm run build
 ```
 
-## 이미지 저장 위치
-
-각 게임에서 사용할 이미지는 다음 위치에 저장하면 됩니다:
-
-- 얼굴 후 맞춤 게임: `/public/images/faces/` 디렉토리
-- 특정 사진 연도 맞추기 게임: `/public/images/photos/` 디렉토리
-
-이미지 저장 후 해당 게임의 config 파일에서 imagePath를 수정하세요.
-
-## 게임 설정 위치
-
-각 게임의 설정은 다음 파일에서 수정 가능합니다:
-
-- 객관식 퀴즈: `src/features/trivia-quiz/config/triviaQuestions.ts`
-- 영화 퀴즈: `src/features/movie-quiz/config/movieQuestions.ts`
-- 얼굴 후 맞춤 퀴즈: `src/features/face-zoom-quiz/config/faceZoomQuestions.ts`
-- 사진 연도 퀴즈: `src/features/photo-year-quiz/config/photoYearQuestions.ts`
-
 ## TODO 리스트
 
 1. **객관식 스타일을 주관식으로 변경**
 
-   - 기존 객관식 형태의 퀴즈 UI를 직접 입력하는 주관식 형태로 변경
-   - 입력값과 정답 비교를 위한 로직 개발 필요
+   - 정답은 현장에서 음성으로 확인할 겁니다. 별도로 입력 받지 않아도 됩니다.
+   - 따라서, 문제 보여주고, 정답 확인 버튼을 눌러 확인합니다.
+   - 점수는 따로 계산하지 않아도 됩니다.
 
 2. **상식, 영화관련 질문과 답을 위한 외부 리소스 조회**
 
