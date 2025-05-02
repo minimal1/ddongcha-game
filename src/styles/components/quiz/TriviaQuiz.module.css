@@ -1,0 +1,141 @@
+.startScreen,
+.questionScreen,
+.answerScreen,
+.resultScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--color-canvas-subtle);
+  border-radius: 8px;
+  border: 1px solid var(--color-border-default);
+}
+
+.startScreen h2,
+.resultScreen h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: var(--color-fg-default);
+}
+
+.startScreen p,
+.resultScreen p {
+  margin-bottom: 10px;
+  color: var(--color-fg-muted);
+}
+
+.questionText {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+  color: var(--color-fg-default);
+}
+
+.optionsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.optionButton {
+  padding: 15px 20px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  background-color: var(--color-canvas-default);
+  border: 1px solid var(--color-border-default);
+  color: var(--color-fg-default);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.optionButton:hover {
+  background-color: var(--color-accent-emphasis);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.answerScreen h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.correctAnswer {
+  color: var(--color-success-fg);
+}
+
+.wrongAnswer {
+  color: var(--color-danger-fg);
+}
+
+.answerDetails {
+  background-color: var(--color-canvas-default);
+  padding: 15px 20px;
+  border-radius: 6px;
+  margin: 20px 0;
+  width: 100%;
+  text-align: left;
+}
+
+.answerDetails p {
+  margin-bottom: 10px;
+}
+
+.scoreDisplay {
+  font-size: 1.2rem;
+  background-color: var(--color-canvas-default);
+  padding: 20px;
+  border-radius: 6px;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.scoreDisplay p {
+  margin: 10px 0;
+}
+
+.primaryButton {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: var(--color-accent-emphasis);
+  color: white;
+  border-color: var(--color-accent-emphasis);
+  cursor: pointer;
+  border-radius: 6px;
+  border: 1px solid;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.primaryButton:hover {
+  background-color: #388bfd;
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.errorMessage {
+  color: var(--color-danger-fg);
+  background-color: rgba(248, 81, 73, 0.1);
+  padding: 15px;
+  border-radius: 6px;
+  margin: 20px 0;
+  text-align: center;
+}
+
+@media (max-width: 500px) {
+  .optionsGrid {
+    grid-template-columns: 1fr;
+  }
+}

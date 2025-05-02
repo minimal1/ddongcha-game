@@ -1,6 +1,6 @@
 import React from 'react';
-import './Dashboard.css';
 import Link from 'next/link';
+import styles from '@/styles/components/Dashboard.module.css';
 
 const Dashboard: React.FC = () => {
   const games = [
@@ -31,16 +31,16 @@ const Dashboard: React.FC = () => {
   ];
 
   return (
-    <div className="dashboard">
-      <h1 className="title">레크리에이션 게임</h1>
-      <p className="subtitle">즐길 게임을 선택하세요!</p>
+    <div className={styles.dashboard}>
+      <h1 className={styles.title}>레크리에이션 게임</h1>
+      <p className={styles.subtitle}>즐길 게임을 선택하세요!</p>
       
-      <div className="games-grid">
+      <div className={styles.gamesGrid}>
         {games.map(game => (
-          <Link href={`/${game.id}`} className="game-card" key={game.id}>
-            <div className="game-icon">{game.icon}</div>
-            <h2 className="game-title">{game.title}</h2>
-            <p className="game-description">{game.description}</p>
+          <Link href={`/${game.id}`} className={styles.gameCard} key={game.id}>
+            <div className={styles.gameIcon}>{game.icon}</div>
+            <h2 className={styles.gameTitle}>{game.title}</h2>
+            <p className={styles.gameDescription}>{game.description}</p>
           </Link>
         ))}
       </div>

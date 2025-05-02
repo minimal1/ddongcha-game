@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import './QuizLayout.css';
+import styles from '@/styles/components/quiz/QuizLayout.module.css';
 
 interface QuizLayoutProps {
   title: string;
@@ -22,25 +22,25 @@ const QuizLayout: React.FC<QuizLayoutProps> = ({
   onBackToDashboard
 }) => {
   return (
-    <div className="quiz-layout">
-      <header className="quiz-header">
-        <h1 className="quiz-title">{title}</h1>
+    <div className={styles.quizLayout}>
+      <header className={styles.quizHeader}>
+        <h1 className={styles.quizTitle}>{title}</h1>
         {!isGameOver && currentQuestion !== undefined && totalQuestions !== undefined && (
-          <div className="quiz-progress">
+          <div className={styles.quizProgress}>
             <span>문제 {currentQuestion}/{totalQuestions}</span>
           </div>
         )}
         {!isGameOver && timeRemaining !== undefined && (
-          <div className="quiz-timer">
+          <div className={styles.quizTimer}>
             <span>남은 시간: {timeRemaining}초</span>
           </div>
         )}
-        <Link href="/" className="back-button" onClick={onBackToDashboard}>
+        <Link href="/" className={styles.backButton} onClick={onBackToDashboard}>
           ← 대시보드로 돌아가기
         </Link>
       </header>
 
-      <main className="quiz-content">
+      <main className={styles.quizContent}>
         {children}
       </main>
     </div>

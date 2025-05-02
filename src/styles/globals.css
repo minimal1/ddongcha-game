@@ -67,3 +67,10 @@ button.primary {
 button.primary:hover {
   background-color: #388bfd;
 }
+
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+}

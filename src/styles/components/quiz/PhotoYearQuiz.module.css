@@ -1,0 +1,245 @@
+/* PhotoYearQuiz 스타일 - GitHub theme */
+
+/* 공통 스타일 */
+.loadingContainer,
+.errorMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  margin: 1rem;
+  background-color: #f6f8fa;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.errorMessage {
+  color: #d73a49;
+  border: 1px solid #f9d0d0;
+  background-color: #fff0f0;
+}
+
+/* 시작 화면 */
+.startScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.startScreen h2 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  color: #24292e;
+}
+
+.startScreen p {
+  margin-bottom: 1rem;
+  color: #586069;
+  line-height: 1.5;
+}
+
+.primaryButton {
+  background-color: #2ea44f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.2s;
+}
+
+.primaryButton:hover {
+  background-color: #2c974b;
+}
+
+.primaryButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(46, 164, 79, 0.5);
+}
+
+/* 질문 화면 */
+.questionScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.photoContainer {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.photoWrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 75%; /* 4:3 비율 */
+  background-color: #f6f8fa;
+}
+
+.imagePlaceholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  color: #586069;
+  border: 1px dashed #d1d5da;
+}
+
+.questionText {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.questionText p {
+  font-size: 1.25rem;
+  color: #24292e;
+  margin-bottom: 0.5rem;
+}
+
+.yearRange {
+  font-size: 1rem;
+  color: #586069;
+  font-style: italic;
+}
+
+.optionsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.optionButton {
+  padding: 1rem;
+  background-color: #f6f8fa;
+  border: 1px solid #d1d5da;
+  border-radius: 6px;
+  font-size: 1.125rem;
+  color: #24292e;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.optionButton:hover {
+  background-color: #f0f3f6;
+  border-color: #bbb;
+}
+
+.optionButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(3, 102, 214, 0.3);
+}
+
+/* 정답 화면 */
+.answerScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.correctAnswer,
+.wrongAnswer {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  width: fit-content;
+}
+
+.correctAnswer {
+  background-color: #e6ffec;
+  color: #22863a;
+  border: 1px solid #b4e6c8;
+}
+
+.wrongAnswer {
+  background-color: #ffebe9;
+  color: #d73a49;
+  border: 1px solid #f9d0d0;
+}
+
+.photoAnswerContainer {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  padding-top: 75%; /* 4:3 비율 */
+}
+
+.photoAnswerContainer .imagePlaceholder {
+  background-color: #f6f8fa;
+}
+
+.answerDetails {
+  margin-bottom: 1.5rem;
+}
+
+.answerDetails p {
+  margin-bottom: 0.5rem;
+  font-size: 1.125rem;
+  color: #24292e;
+}
+
+/* 결과 화면 */
+.resultScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.resultScreen h2 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  color: #24292e;
+}
+
+.scoreDisplay {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: #f6f8fa;
+  border-radius: 6px;
+  border: 1px solid #d1d5da;
+  width: 100%;
+}
+
+.scoreDisplay p {
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  color: #24292e;
+}
+
+.scoreDisplay p:last-child {
+  margin-bottom: 0;
+}

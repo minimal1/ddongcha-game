@@ -1,7 +1,7 @@
 import React from 'react';
-import QuizLayout from 'shared/ui/QuizLayout';
-import { QuizState } from 'shared/lib/types';
-import { useQuiz } from 'shared/lib/useQuiz';
+import QuizLayout from '@/shared/ui/QuizLayout';
+import { QuizState } from '@/shared/lib/types';
+import { useQuiz } from '@/shared/lib/useQuiz';
 import { photoYearQuestions, PHOTO_YEAR_TIME_LIMIT } from '../config/photoYearQuestions';
 import './PhotoYearQuiz.css';
 
