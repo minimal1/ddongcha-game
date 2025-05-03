@@ -1,0 +1,109 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f6f8fa;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: #24292e;
+  color: white;
+  border-bottom: 1px solid #e1e4e8;
+}
+
+.logo {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.logo h1 {
+  font-size: 1.4rem;
+  margin: 0;
+  color: white;
+}
+
+.logo a {
+  text-decoration: none;
+  color: white;
+}
+
+.nav {
+  flex: 1;
+  margin: 0 2rem;
+}
+
+.tabList {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tabItem {
+  margin-right: 1rem;
+}
+
+.tabButton {
+  background: none;
+  border: none;
+  color: #d1d5da;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.tabButton:hover {
+  background-color: #2c3136;
+}
+
+.tabButton.active {
+  color: white;
+  font-weight: 600;
+  border-bottom: 2px solid #2188ff;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.hostButton {
+  display: inline-block;
+  background-color: #2ea44f;
+  color: white;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.hostButton:hover {
+  background-color: #2c974b;
+}
+
+.main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.footer {
+  padding: 1.5rem;
+  border-top: 1px solid #e1e4e8;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #586069;
+  background-color: white;
+}
