@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useSupabaseContext } from '@/shared/context/SupabaseProvider';
 import styles from './Login.module.css';
+import Link from 'next/link';
 
 /**
  * 로그인 페이지 컴포넌트
@@ -128,9 +129,9 @@ const LoginPage: React.FC = () => {
           </form>
 
           <div className={styles.returnLink}>
-            <a href="/" onClick={(e) => { e.preventDefault(); router.push('/'); }}>
+            <Link href="/"> 
               메인으로 돌아가기
-            </a>
+            </Link>
           </div>
         </div>
       </div>
