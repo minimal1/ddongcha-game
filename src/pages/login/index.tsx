@@ -109,6 +109,15 @@ const LoginPage: React.FC = () => {
               />
             </div>
 
+            <div className={styles.forgotPassword}>
+              <a 
+                href="/reset-password/request" 
+                onClick={(e) => { e.preventDefault(); router.push('/reset-password/request'); }}
+              >
+                비밀번호를 잊으셨나요?
+              </a>
+            </div>
+
             <button 
               type="submit" 
               className={styles.loginButton}
