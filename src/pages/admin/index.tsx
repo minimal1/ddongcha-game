@@ -5,6 +5,7 @@ import AdminLayout from '@/features/admin/ui/AdminLayout';
 import QuestionList from '@/features/admin/ui/QuestionList';
 import GameSessionList from '@/features/admin/ui/GameSessionList';
 import AdminDashboard from '@/features/admin/ui/AdminDashboard';
+import AdminAuthGuard from '@/features/auth/ui/AdminAuthGuard';
 
 type AdminTab = 'dashboard' | 'questions' | 'sessions';
 
@@ -30,7 +31,7 @@ const AdminPage: React.FC = () => {
   };
 
   return (
-    <>
+    <AdminAuthGuard>
       <Head>
         <title>게임 관리자 페이지</title>
         <meta name="description" content="레크리에이션 게임 관리자 페이지" />
@@ -42,7 +43,7 @@ const AdminPage: React.FC = () => {
       >
         {renderTabContent()}
       </AdminLayout>
-    </>
+    </AdminAuthGuard>
   );
 };
 
