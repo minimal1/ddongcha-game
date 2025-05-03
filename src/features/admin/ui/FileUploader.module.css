@@ -1,0 +1,146 @@
+.fileUploader {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.fileInput {
+  display: none;
+}
+
+.dropzone {
+  border: 2px dashed #e1e4e8;
+  border-radius: 6px;
+  padding: 2rem;
+  text-align: center;
+  background-color: #f6f8fa;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.dropzone:hover {
+  border-color: #0366d6;
+  background-color: #f1f8ff;
+}
+
+.dropzoneContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.uploadIcon {
+  color: #586069;
+  margin-bottom: 0.5rem;
+}
+
+.dropzoneContent p {
+  margin: 0;
+  font-size: 1rem;
+  color: #24292e;
+}
+
+.dropzoneContent span {
+  font-size: 0.8rem;
+  color: #586069;
+}
+
+.preview {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  padding: 1rem;
+  background-color: white;
+}
+
+.previewImage {
+  max-width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  margin: 0 auto;
+  display: block;
+  border-radius: 4px;
+}
+
+.previewActions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.changeButton,
+.removeButton {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.changeButton {
+  background-color: #fafbfc;
+  color: #24292e;
+  border: 1px solid #e1e4e8;
+}
+
+.changeButton:hover {
+  background-color: #f6f8fa;
+}
+
+.removeButton {
+  background-color: #fafbfc;
+  color: #cb2431;
+  border: 1px solid #e1e4e8;
+}
+
+.removeButton:hover {
+  background-color: #f6f8fa;
+}
+
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.progressBar {
+  width: 100%;
+  height: 6px;
+  background-color: #eaecef;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background-color: #2188ff;
+  transition: width 0.3s ease;
+}
+
+.progress span {
+  font-size: 0.8rem;
+  color: #586069;
+  text-align: center;
+}
+
+.error {
+  background-color: #ffebe9;
+  border: 1px solid #f97583;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  color: #cb2431;
+}
+
+.error p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.buttonDisabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
