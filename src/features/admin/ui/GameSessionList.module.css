@@ -1,0 +1,161 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #24292e;
+}
+
+.createButton {
+  padding: 0.75rem 1.5rem;
+  background-color: #2ea44f;
+  color: white;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.createButton:hover {
+  background-color: #2c974b;
+}
+
+.sessionList {
+  background-color: white;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.sessionListHeader {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.5fr 1fr 1.5fr;
+  padding: 1rem;
+  background-color: #f6f8fa;
+  border-bottom: 1px solid #e1e4e8;
+  font-weight: 600;
+  color: #586069;
+}
+
+.sessionItem {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.5fr 1fr 1.5fr;
+  padding: 1rem;
+  border-bottom: 1px solid #e1e4e8;
+  align-items: center;
+}
+
+.sessionItem:last-child {
+  border-bottom: none;
+}
+
+.sessionItem:hover {
+  background-color: #f6f8fa;
+}
+
+.sessionName {
+  font-weight: 500;
+  color: #24292e;
+}
+
+.statusBadge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 2rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.statusWaiting {
+  background-color: #f1f8ff;
+  color: #0366d6;
+}
+
+.statusActive {
+  background-color: #dcffe4;
+  color: #22863a;
+}
+
+.statusEnded {
+  background-color: #f6f8fa;
+  color: #586069;
+}
+
+.sessionDate {
+  color: #586069;
+  font-size: 0.9rem;
+}
+
+.sessionQuestions {
+  font-size: 0.9rem;
+}
+
+.sessionActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.hostLink {
+  padding: 0.4rem 0.75rem;
+  background-color: #0366d6;
+  color: white;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.hostLink:hover {
+  background-color: #0256b9;
+}
+
+.detailsButton {
+  padding: 0.4rem 0.75rem;
+  background-color: #fafbfc;
+  color: #24292e;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.detailsButton:hover {
+  background-color: #f3f4f6;
+}
+
+.loading, .error, .empty {
+  padding: 2rem;
+  text-align: center;
+}
+
+.loading, .empty {
+  color: #586069;
+}
+
+.error {
+  color: #cb2431;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  gap: 1rem;
+}
