@@ -15,6 +15,8 @@ const QuestionList: React.FC = () => {
   const [error, setError] = useState<Error | null>(null);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState<GameQuestion | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterType, setFilterType] = useState('');
   
   // 문항 데이터 로딩
   useEffect(() => {
@@ -104,6 +106,28 @@ const QuestionList: React.FC = () => {
     }
   };
   
+  // 검색 및 필터링 처리
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+  
+  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilterType(e.target.value);
+  };
+  
+  // 필터링된 문항 목록
+  const filteredQuestions = questions.filter(question => {
+    // 검색어 필터링
+    const matchesSearch = searchTerm === '' || 
+      question.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      question.content.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    // 유형 필터링
+    const matchesType = filterType === '' || question.type === filterType;
+    
+    return matchesSearch && matchesType;
+  });
+  
   // 로딩 상태 표시
   if (loading) {
     return (
@@ -163,9 +187,15 @@ const QuestionList: React.FC = () => {
           type="text"
           placeholder="문항 검색..."
           className={styles.searchInput}
+          value={searchTerm}
+          onChange={handleSearch}
         />
         
-        <select className={styles.filterSelect}>
+        <select 
+          className={styles.filterSelect}
+          value={filterType}
+          onChange={handleFilterChange}
+        >
           <option value="">모든 유형</option>
           <option value="single">단일 선택</option>
           <option value="multiple">객관식</option>
@@ -174,63 +204,89 @@ const QuestionList: React.FC = () => {
       </div>
       
       <div className={styles.questionList}>
-        {questions.map((question) => (
-          <div key={question.id} className={styles.questionItem}>
-            <div className={styles.questionHeader}>
-              <div className={styles.questionTitle}>
-                <h3>{question.title}</h3>
-                <span className={styles.questionType}>
-                  {getQuestionTypeText(question.type)}
-                </span>
-              </div>
-              
-              <div className={styles.questionActions}>
-                <button
-                  className={styles.editButton}
-                  onClick={() => handleOpenEditor(question)}
-                >
-                  수정
-                </button>
-                <button
-                  className={styles.deleteButton}
-                  onClick={() => handleDeleteQuestion(question.id)}
-                >
-                  삭제
-                </button>
-              </div>
-            </div>
-            
-            <div className={styles.questionContent}>
-              <p>{question.content}</p>
-              
-              {question.type === 'multiple' && question.options && (
-                <div className={styles.questionOptions}>
-                  <h4>선택지:</h4>
-                  <ul>
-                    {question.options.map((option) => (
-                      <li key={option.id} className={option.isCorrect ? styles.correctOption : ''}>
-                        {option.text} {option.isCorrect && <span>(정답)</span>}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              
-              {(question.type === 'single' || question.type === 'text') && question.answer && (
-                <div className={styles.questionAnswer}>
-                  <h4>정답:</h4>
-                  <p>{question.answer}</p>
-                </div>
-              )}
-            </div>
-            
-            <div className={styles.questionMeta}>
-              <span>난이도: {question.difficulty || '보통'}</span>
-              <span>점수: {question.points || 1}점</span>
-              <span>시간 제한: {question.timeLimit || 30}초</span>
-            </div>
+        {filteredQuestions.length === 0 ? (
+          <div className={styles.noResults}>
+            <p>검색 결과가 없습니다.</p>
           </div>
-        ))}
+        ) : (
+          filteredQuestions.map((question) => (
+            <div key={question.id} className={styles.questionItem}>
+              <div className={styles.questionHeader}>
+                <div className={styles.questionTitle}>
+                  <h3>{question.title}</h3>
+                  <span className={styles.questionType}>
+                    {getQuestionTypeText(question.type)}
+                  </span>
+                </div>
+                
+                <div className={styles.questionActions}>
+                  <button
+                    className={styles.editButton}
+                    onClick={() => handleOpenEditor(question)}
+                  >
+                    수정
+                  </button>
+                  <button
+                    className={styles.deleteButton}
+                    onClick={() => handleDeleteQuestion(question.id)}
+                  >
+                    삭제
+                  </button>
+                </div>
+              </div>
+              
+              <div className={styles.questionContent}>
+                {question.imageUrl && (
+                  <div className={styles.questionImage}>
+                    <img src={question.imageUrl} alt={question.title} />
+                  </div>
+                )}
+                
+                <p>{question.content}</p>
+                
+                {question.type === 'multiple' && question.options && (
+                  <div className={styles.questionOptions}>
+                    <h4>선택지:</h4>
+                    <ul>
+                      {question.options.map((option) => (
+                        <li key={option.id} className={option.isCorrect ? styles.correctOption : ''}>
+                          {option.text} {option.isCorrect && <span>(정답)</span>}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                
+                {(question.type === 'single' || question.type === 'text') && question.answer && (
+                  <div className={styles.questionAnswer}>
+                    <h4>정답:</h4>
+                    <p>{question.answer}</p>
+                  </div>
+                )}
+                
+                {question.hint && (
+                  <div className={styles.questionHint}>
+                    <h4>힌트:</h4>
+                    <p>{question.hint}</p>
+                  </div>
+                )}
+                
+                {question.explanation && (
+                  <div className={styles.questionExplanation}>
+                    <h4>설명:</h4>
+                    <p>{question.explanation}</p>
+                  </div>
+                )}
+              </div>
+              
+              <div className={styles.questionMeta}>
+                <span>난이도: {question.difficulty || '보통'}</span>
+                <span>점수: {question.points || 1}점</span>
+                <span>시간 제한: {question.timeLimit || 30}초</span>
+              </div>
+            </div>
+          ))
+        )}
       </div>
       
       {isEditorOpen && (
