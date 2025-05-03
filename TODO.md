@@ -4,7 +4,7 @@
 
 이 문서는 똥차레이스 게임 웹 애플리케이션 개발 계획을 담고 있습니다. 게임은 진행자와 참여자들이 실시간으로 소통하며 퀴즈를 진행하는 형태로, 다양한 게임 유형(상식퀴즈, 영화/대사 퀴즈, 사진 연도 맞추기, 줌아웃 퀴즈 등)을 지원합니다.
 
-우리는 Firebase를 백엔드로 사용하여 다음과 같은 핵심 기능을 구현합니다:
+우리는 Supabase를 백엔드로 사용하여 다음과 같은 핵심 기능을 구현합니다:
 1. 실시간 참여자 상호작용: 가장 빠르게 정답을 제출한 참여자가 기회를 얻습니다
 2. 랜덤 이름 생성: 참여자들은 자동으로 "형용사 + 동물" 형식의 익명 이름을 부여받습니다
 3. 오답 제한: 오답 제출 시 3초 쿨다운으로 어뷰징을 방지합니다
@@ -14,13 +14,12 @@
 
 ## TODO 리스트
 
-1. **Firebase 설정**
-   - [ ] Firebase 프로젝트 생성
-   - [ ] Firestore DB 설정
-   - [ ] Realtime Database 설정
-   - [ ] Firebase Storage 설정
-   - [ ] Firebase 웹 앱 등록 및 구성 정보 가져오기
-   - [ ] Firebase 초기화 파일 생성 (src/shared/config/firebase.ts)
+1. **Supabase 설정**
+   - [ ] Supabase 프로젝트 생성
+   - [ ] 데이터베이스 테이블 설계 및 생성
+   - [ ] 스토리지 버킷 설정
+   - [ ] Realtime 기능 활성화
+   - [ ] Supabase 클라이언트 설정 파일 생성 (src/shared/config/supabase.ts)
    - [ ] 환경 변수 설정 (.env.local)
 
 2. **공통 타입 정의**
@@ -32,12 +31,12 @@
    - [ ] 관리자 페이지 라우트 생성 (/admin)
    - [ ] 문제 목록 렌더링 컴포넌트 구현
    - [ ] 문제 추가/수정 폼 컴포넌트 구현
-   - [ ] 이미지 업로드 기능 구현
+   - [ ] 이미지 업로드 기능 구현 (Supabase Storage 활용)
    - [ ] 게임 유형별 폼 필드 다르게 표시
 
 4. **게임 서비스 로직 구현**
-   - [ ] getQuestions 함수 구현
-   - [ ] getCurrentGameSession 함수 구현
+   - [ ] getQuestions 함수 구현 (Supabase Query)
+   - [ ] getCurrentGameSession 함수 구현 (Supabase Realtime)
    - [ ] getCurrentQuestion 함수 구현
    - [ ] startGameSession 함수 구현
    - [ ] stopGameSession 함수 구현
@@ -68,12 +67,12 @@
    - [ ] 다양한 상태에 따른 UI 처리 (비활성화, 오답, 등)
 
 7. **보안 및 규칙 설정**
-   - [ ] Firestore 보안 규칙 설정
-   - [ ] Realtime Database 보안 규칙 설정
-   - [ ] Storage 보안 규칙 설정
+   - [ ] Row Level Security (RLS) 설정
+   - [ ] 스토리지 보안 정책 설정
+   - [ ] API 권한 관리 설정
 
 8. **배포 및 테스트**
-   - [ ] Firebase 호스팅 설정 (선택 사항)
+   - [ ] Vercel 또는 Netlify 배포 설정
    - [ ] 여러 디바이스에서 동시 접속 테스트
    - [ ] 게임 진행 흐름 테스트
    - [ ] 오류 및 예외 상황 처리 확인
