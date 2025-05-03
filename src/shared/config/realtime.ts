@@ -1,5 +1,5 @@
-import { RealtimeChannel } from '@supabase/supabase-js';
-import { supabase, TABLES } from './supabase';
+import { RealtimeChannel } from "@supabase/supabase-js";
+import { supabase, TABLES } from "./supabase";
 
 // 채널 이름 생성 함수
 const createChannelName = (gameId: string) => `game:${gameId}`;
@@ -20,10 +20,10 @@ export const subscribeToGameSession = (
   // 플레이어 참가 이벤트 구독
   if (callbacks.onPlayerJoin) {
     channel.on(
-      'postgres_changes',
+      "postgres_changes",
       {
-        event: 'INSERT',
-        schema: 'public',
+        event: "INSERT",
+        schema: "public",
         table: TABLES.PLAYERS,
         filter: `game_id=eq.${gameId}`,
       },
@@ -34,10 +34,10 @@ export const subscribeToGameSession = (
   // 플레이어 답변 이벤트 구독
   if (callbacks.onPlayerAnswer) {
     channel.on(
-      'postgres_changes',
+      "postgres_changes",
       {
-        event: 'INSERT',
-        schema: 'public',
+        event: "INSERT",
+        schema: "public",
         table: TABLES.PLAYER_ANSWERS,
         filter: `game_id=eq.${gameId}`,
       },
@@ -48,10 +48,10 @@ export const subscribeToGameSession = (
   // 게임 상태 변경 이벤트 구독
   if (callbacks.onGameStateChange) {
     channel.on(
-      'postgres_changes',
+      "postgres_changes",
       {
-        event: 'UPDATE',
-        schema: 'public',
+        event: "UPDATE",
+        schema: "public",
         table: TABLES.GAME_SESSIONS,
         filter: `id=eq.${gameId}`,
       },
@@ -59,15 +59,9 @@ export const subscribeToGameSession = (
     );
   }
 
-  // 에러 처리
-  channel.on('error', (error) => {
-    console.error('Realtime subscription error:', error);
-    callbacks.onError?.(error);
-  });
-
   // 채널 구독 시작
   channel.subscribe((status) => {
-    if (status !== 'SUBSCRIBED') {
+    if (status !== "SUBSCRIBED") {
       console.log(`Subscription status: ${status}`);
     }
   });
@@ -82,19 +76,19 @@ export const unsubscribeFromGameSession = (channel: RealtimeChannel) => {
 
 // 채널에 직접 메시지 보내기 (호스트-플레이어 통신용)
 export const broadcastToGameChannel = async (
-  gameId: string, 
-  eventType: string, 
+  gameId: string,
+  eventType: string,
   payload: any
 ) => {
   try {
     await supabase.channel(createChannelName(gameId)).send({
-      type: 'broadcast',
+      type: "broadcast",
       event: eventType,
       payload,
     });
     return true;
   } catch (error) {
-    console.error('Broadcasting error:', error);
+    console.error("Broadcasting error:", error);
     return false;
   }
 };
