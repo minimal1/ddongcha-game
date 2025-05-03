@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useGameSession } from '@/hooks/useGameSession';
 import { GameQuestion } from '@/shared/config/types';
+import FileUploader from './FileUploader';
 import styles from './QuestionEditor.module.css';
 
 interface QuestionEditorProps {
@@ -149,6 +150,11 @@ const QuestionEditor: React.FC<QuestionEditorProps> = ({
     }
     
     setOptions(prevOptions => prevOptions.filter((_, i) => i !== index));
+  };
+  
+  // 이미지 업로드 완료 처리
+  const handleImageUploaded = (url: string) => {
+    setImageUrl(url);
   };
   
   return (
@@ -305,14 +311,12 @@ const QuestionEditor: React.FC<QuestionEditorProps> = ({
             </div>
           )}
           
+          {/* 이미지 업로드 */}
           <div className={styles.formGroup}>
-            <label htmlFor="imageUrl">이미지 URL (선택사항)</label>
-            <input
-              id="imageUrl"
-              type="text"
-              value={imageUrl}
-              onChange={(e) => setImageUrl(e.target.value)}
-              placeholder="이미지 URL을 입력하세요"
+            <label>문항 이미지 (선택사항)</label>
+            <FileUploader
+              onFileUploaded={handleImageUploaded}
+              currentUrl={imageUrl}
             />
           </div>
           
