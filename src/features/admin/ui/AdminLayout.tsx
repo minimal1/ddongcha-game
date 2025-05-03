@@ -1,6 +1,8 @@
 import React, { ReactNode } from 'react';
 import Link from 'next/link';
 import styles from './AdminLayout.module.css';
+import LogoutButton from '@/features/auth/ui/LogoutButton';
+import { useSupabaseContext } from '@/shared/context/SupabaseProvider';
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -16,10 +18,12 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
   activeTab, 
   onTabChange 
 }) => {
-  // 탭 메뉴 항목 정의
+  const { user } = useSupabaseContext();
+  
+  // 탭 메뉴 정의
   const tabs = [
     { id: 'dashboard', label: '대시보드' },
-    { id: 'questions', label: '문항 관리' },
+    { id: 'questions', label: '문제 관리' },
     { id: 'sessions', label: '게임 세션 관리' }
   ];
 
@@ -28,7 +32,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
       <header className={styles.header}>
         <div className={styles.logo}>
           <Link href="/">
-            <h1>레크리에이션 게임 관리</h1>
+            <h1>똥차게임 관리자</h1>
           </Link>
         </div>
         <nav className={styles.nav}>
@@ -46,6 +50,12 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
           </ul>
         </nav>
         <div className={styles.actions}>
+          {user && (
+            <div className={styles.userInfo}>
+              <span className={styles.userEmail}>{user.email}</span>
+              <LogoutButton />
+            </div>
+          )}
           <Link href="/host" className={styles.hostButton}>
             게임 진행 화면으로
           </Link>
@@ -57,7 +67,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
       </main>
       
       <footer className={styles.footer}>
-        <p>&copy; {new Date().getFullYear()} 레크리에이션 게임 관리자</p>
+        <p>&copy; {new Date().getFullYear()} 똥차게임 관리자</p>
       </footer>
     </div>
   );
