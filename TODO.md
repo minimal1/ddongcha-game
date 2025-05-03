@@ -23,28 +23,29 @@
    - [x] 환경 변수 설정 (.env.local)
 
 2. **데이터 타입 정의**
-   - [ ] GameQuestion 데이터 타입 정의 (src/shared/config/types.ts)
-   - [ ] GameSession 데이터 타입 정의
-   - [ ] Player 데이터 타입 정의
+   - [x] GameQuestion 데이터 타입 정의 (src/shared/config/types.ts)
+   - [x] GameSession 데이터 타입 정의
+   - [x] Player 데이터 타입 정의
 
-3. **관리자 페이지 구현**
+3. **게임 서비스 로직 구현**
+   - [x] getQuestions 함수 구현 (useGameSession 훅)
+   - [x] getCurrentGameSession 함수 구현 (useGameState 훅)
+   - [x] getCurrentQuestion 함수 구현 (useGameState 훅)
+   - [x] startGameSession 함수 구현 (useGameState 훅)
+   - [x] stopGameSession 함수 구현 (useGameState 훅)
+   - [x] moveToNextQuestion 함수 구현 (useGameState 훅)
+   - [x] generateRandomName 함수 구현 (useGameJoin 훅)
+   - [x] joinGameWithRandomName 함수 구현 (useGameJoin 훅)
+   - [x] submitAnswer 함수 구현 (useGameJoin 훅)
+   - [x] markPlayerWrong 함수 구현 (useGameState 훅)
+   - [x] 타이머 기능 구현 (useGameTimer 훅)
+
+4. **관리자 페이지 구현**
    - [ ] 관리자 페이지 레이아웃 설정 (/admin)
    - [ ] 문항 관리 컴포넌트 개발
    - [ ] 문항 추가/수정 및 프리뷰 컴포넌트 구현
    - [ ] 이미지와 첨부파일 기능 구현 (Supabase Storage 활용)
    - [ ] 게임 설정값 및 진행 다운로드 화면
-
-4. **게임 서비스 로직 구현**
-   - [ ] getQuestions 함수 구현 (Supabase Query)
-   - [ ] getCurrentGameSession 함수 구현 (Supabase Realtime)
-   - [ ] getCurrentQuestion 함수 구현
-   - [ ] startGameSession 함수 구현
-   - [ ] stopGameSession 함수 구현
-   - [ ] moveToNextQuestion 함수 구현
-   - [ ] generateRandomName 함수 구현 (랜덤 이름 생성)
-   - [ ] joinGameWithRandomName 함수 구현
-   - [ ] submitAnswer 함수 구현
-   - [ ] markPlayerWrong 함수 구현 (문항 패배)
 
 5. **게임 진행자 화면 구현**
    - [ ] 게임 진행자 레이아웃 설정 (/host)
