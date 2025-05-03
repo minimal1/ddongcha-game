@@ -1,0 +1,226 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e1e4e8;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #24292e;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: #586069;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.closeButton:hover {
+  color: #24292e;
+}
+
+.form {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.formGroup label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #24292e;
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+  padding: 0.75rem;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #24292e;
+  background-color: white;
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: #0366d6;
+  box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.1);
+}
+
+.formGroup textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.optionsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.optionsSection h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #24292e;
+}
+
+.optionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.optionItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.optionItem input[type="checkbox"] {
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.optionItem input[type="text"] {
+  flex: 1;
+}
+
+.removeOptionButton {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid #e1e4e8;
+  background-color: #fafbfc;
+  color: #cb2431;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.removeOptionButton:hover {
+  background-color: #f6f8fa;
+}
+
+.removeOptionButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.addOptionButton {
+  align-self: flex-start;
+  padding: 0.5rem 1rem;
+  background-color: #fafbfc;
+  color: #0366d6;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.addOptionButton:hover {
+  background-color: #f6f8fa;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.cancelButton,
+.saveButton {
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.cancelButton {
+  background-color: #fafbfc;
+  color: #24292e;
+  border: 1px solid #e1e4e8;
+}
+
+.cancelButton:hover {
+  background-color: #f6f8fa;
+}
+
+.saveButton {
+  background-color: #2ea44f;
+  color: white;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+}
+
+.saveButton:hover {
+  background-color: #2c974b;
+}
+
+.cancelButton:disabled,
+.saveButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error {
+  background-color: #ffebe9;
+  border: 1px solid #f97583;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  color: #cb2431;
+}
+
+.error p {
+  margin: 0;
+}
