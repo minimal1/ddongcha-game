@@ -51,7 +51,7 @@ const HintsField: React.FC<HintsFieldProps> = ({
       </div>
 
       {hints.length === 0 ? (
-        <p className={styles.emptyMessage}>추가된 힌트가 없습니다. 힌트를 추가하려면 '힌트 추가' 버튼을 클릭하세요.</p>
+        <p className={styles.emptyMessage}>추가된 힌트가 없습니다. 힌트를 추가하려면 힌트 추가 버튼을 클릭하세요.</p>
       ) : (
         <ul className={styles.hintsList}>
           {hints.map((hint, index) => (
