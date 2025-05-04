@@ -4,7 +4,7 @@ import Head from 'next/head';
 import AdminLayout from '@/features/admin/layout/AdminLayout';
 import QuizFormFields from '@/features/admin/quiz/ui/QuizFormFields';
 import { useQuizDetail } from '@/features/admin/quiz/lib/useQuizDetail';
-import { validateQuizForm } from '@/features/admin/quiz/lib/quizFormUtils';
+import { validateQuizForm, QuizFormValues } from '@/features/admin/quiz/lib/quizFormUtils';
 import styles from './Detail.module.css';
 
 /**
@@ -79,25 +79,37 @@ const QuizDetailPage: React.FC = () => {
     router.push('/admin');
   };
 
-  // 폼 필드 변경 핸들러
+  // 폼 필드 변경 핸들러 - 올바른 상태 업데이트 방식 적용
   const handleQuestionChange = (value: string) => {
     if (!quiz) return;
-    quiz.question = value;
+    updateQuiz({
+      ...quiz,
+      question: value
+    });
   };
 
   const handleAnswerChange = (value: string) => {
     if (!quiz) return;
-    quiz.answer = value;
+    updateQuiz({
+      ...quiz,
+      answer: value
+    });
   };
 
   const handleHintsChange = (values: string[]) => {
     if (!quiz) return;
-    quiz.hints = values;
+    updateQuiz({
+      ...quiz,
+      hints: values
+    });
   };
 
   const handleImageUrlsChange = (urls: string[]) => {
     if (!quiz) return;
-    quiz.imageUrls = urls;
+    updateQuiz({
+      ...quiz,
+      imageUrls: urls
+    });
   };
 
   return (
