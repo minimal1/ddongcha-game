@@ -1,9 +1,8 @@
-// 퀴즈 타입 정의
-export type QuestionType = 'trivia' | 'movie' | 'photo-year' | 'guess-who';
+import { QuestionType } from "@/entities/shared/quiz/model/question-type.model";
 
 // 기본 퀴즈 인터페이스 (공통 필드)
 export interface QuizQuestion {
-  id: string; // UUID 형식으로 변경
+  uuid: string; // UUID 형식으로 변경
   questionType: QuestionType;
   question: string;
   answer: string;
@@ -17,33 +16,24 @@ export interface ImageQuizQuestion extends QuizQuestion {
 
 // 퀴즈 타입별 특화 인터페이스
 export interface TriviaQuizQuestion extends QuizQuestion {
-  questionType: 'trivia';
+  questionType: "trivia";
 }
 
 export interface MovieQuizQuestion extends QuizQuestion {
-  questionType: 'movie';
+  questionType: "movie";
 }
 
 export interface PhotoYearQuizQuestion extends ImageQuizQuestion {
-  questionType: 'photo-year';
+  questionType: "photo-year";
 }
 
 export interface GuessWhoQuizQuestion extends ImageQuizQuestion {
-  questionType: 'guess-who';
+  questionType: "guess-who";
 }
 
 // 유니온 타입을 통한 모든 퀴즈 타입 통합
-export type Quiz = 
-  | TriviaQuizQuestion 
-  | MovieQuizQuestion 
-  | PhotoYearQuizQuestion 
+export type Quiz =
+  | TriviaQuizQuestion
+  | MovieQuizQuestion
+  | PhotoYearQuizQuestion
   | GuessWhoQuizQuestion;
-
-// 퀴즈 생성/수정을 위한 요청 인터페이스
-export interface QuizRequest {
-  questionType: QuestionType;
-  question: string;
-  imageUrls?: string[];
-  answer: string;
-  hints?: string[];
-}
