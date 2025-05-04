@@ -1,0 +1,130 @@
+.container {
+  margin-bottom: 1.5rem;
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.label {
+  font-weight: 500;
+  color: #333;
+}
+
+.addButton {
+  padding: 0.25rem 0.75rem;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.addButton:hover {
+  background-color: #219653;
+}
+
+.addButton:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
+
+.emptyMessage {
+  color: #666;
+  font-style: italic;
+  padding: 1rem;
+  border: 1px dashed #ddd;
+  border-radius: 4px;
+  text-align: center;
+  margin: 0;
+}
+
+.hintsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.hintItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hintNumber {
+  width: 24px;
+  height: 24px;
+  background-color: #f1c40f;
+  color: #333;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.hintInput {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.hintInput:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.hintInput:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.removeButton {
+  width: 24px;
+  height: 24px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.removeButton:hover {
+  background-color: #c0392b;
+}
+
+.removeButton:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
+
+/* 반응형 대응 */
+@media (max-width: 768px) {
+  .headerRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .addButton {
+    width: 100%;
+  }
+}
