@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getQuizById, updateQuiz, deleteQuiz } from '../api/quizAdminApi';
 import { apiToFormValues, formToApiValues, QuizFormValues } from './quizFormUtils';
+import { deleteImagesOnly } from './imageUtils';
 
 /**
  * 퀴즈 상세 정보를 관리하는 훅
@@ -61,10 +62,12 @@ export const useQuizDetail = (uuid: string) => {
         // 삭제된 이미지가 있으면서 퀴즈는 삭제하지 않은 경우 이미지만 삭제
         if (deletedImages.length > 0) {
           try {
-            // TODO: 이미지만 삭제하는 함수 호출
-            // 현재 deleteQuiz 함수가 퀴즈와 이미지를 함께 삭제하므로 이미지만 삭제하는 별도 함수 필요
-            // 임시로 콘솔에 로그만 출력
-            console.log('삭제될 이미지:', deletedImages);
+            // 이미지만 삭제하는 유틸리티 함수 호출
+            const deleteResult = await deleteImagesOnly(deletedImages);
+            
+            if (!deleteResult) {
+              console.warn('일부 이미지 삭제 실패, 하지만 퀴즈 업데이트는 성공');
+            }
           } catch (err) {
             console.error('이미지 삭제 오류:', err);
             // 이미지 삭제 실패는 퀴즈 업데이트에 영향 없음
