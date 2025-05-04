@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import Head from 'next/head';
 import QuizLayout from '@/features/user/quiz/ui/QuizLayout';
 import { useQuiz, QuizState } from '@/features/user/quiz/lib/useQuiz';
-import { PhotoYearQuestion } from '@/features/user/quiz/model/quiz.model';
+import { PhotoYearQuizQuestion } from '@/features/user/quiz/model/quiz.model';
 import styles from '@/features/user/quiz/ui/PhotoYearQuiz.module.css';
 import useQuizData from '@/features/user/quiz/lib/useQuizData';
 
@@ -23,7 +23,7 @@ const PhotoYearQuizPage: NextPage = () => {
     showAnswer,
     nextQuestion,
     resetQuiz
-  } = useQuiz<PhotoYearQuestion>({
+  } = useQuiz({
     questions,
   });
 

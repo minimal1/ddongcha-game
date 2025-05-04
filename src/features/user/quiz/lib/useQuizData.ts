@@ -10,13 +10,23 @@ import {
 } from "../model/quiz.model";
 import { QuestionType } from "@/entities/shared/quiz/model/question-type.model";
 
-interface UseQuizDataParams {
-  questionType?: QuestionType;
+interface UseQuizDataParams<T extends QuestionType> {
+  questionType?: T;
   limit?: number;
 }
 
-interface UseQuizDataReturn {
-  questions: Quiz[];
+type QuizData<T extends QuestionType> = T extends "trivia"
+  ? TriviaQuizQuestion
+  : T extends "movie"
+  ? MovieQuizQuestion
+  : T extends "photo-year"
+  ? PhotoYearQuizQuestion
+  : T extends "guess-who"
+  ? GuessWhoQuizQuestion
+  : never;
+
+interface UseQuizDataReturn<T extends QuestionType> {
+  questions: QuizData<T>[];
   loading: boolean;
   error: Error | null;
   refetch: () => Promise<void>;
@@ -27,11 +37,11 @@ interface UseQuizDataReturn {
  * @param params 퀴즈 조회 파라미터 (타입, 제한 개수)
  * @returns 퀴즈 질문 목록, 로딩 상태, 에러, 다시 가져오기 함수
  */
-export default function useQuizData({
+export default function useQuizData<T extends QuestionType>({
   questionType,
   limit = 10,
-}: UseQuizDataParams = {}): UseQuizDataReturn {
-  const [questions, setQuestions] = useState<Quiz[]>([]);
+}: UseQuizDataParams<T> = {}): UseQuizDataReturn<T> {
+  const [questions, setQuestions] = useState<QuizData<T>[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -44,7 +54,10 @@ export default function useQuizData({
       setLoading(true);
 
       // Supabase 쿼리 빌더
-      let query = supabase.from(TABLES.QUESTIONS).select("*").limit(limit || 10);
+      let query = supabase
+        .from(TABLES.QUESTIONS)
+        .select("*")
+        .limit(limit || 10);
 
       // 조건부 필터링
       if (questionType) {
@@ -69,33 +82,33 @@ export default function useQuizData({
           };
 
           // 퀴즈 타입에 따라 다른 처리
-          switch (item.question_type) {
+          switch (item.question_type as QuestionType) {
             case "trivia":
               return {
                 ...baseQuestion,
                 questionType: "trivia",
               } as TriviaQuizQuestion;
-              
+
             case "movie":
               return {
                 ...baseQuestion,
                 questionType: "movie",
               } as MovieQuizQuestion;
-              
+
             case "photo-year":
               return {
                 ...baseQuestion,
                 questionType: "photo-year",
                 imageUrls: item.image_urls || [],
               } as PhotoYearQuizQuestion;
-              
+
             case "guess-who":
               return {
                 ...baseQuestion,
                 questionType: "guess-who",
                 imageUrls: item.image_urls || [],
               } as GuessWhoQuizQuestion;
-              
+
             default:
               // 기본값으로 Trivia Quiz 반환
               return {
@@ -105,7 +118,7 @@ export default function useQuizData({
           }
         });
 
-        setQuestions(formattedQuestions);
+        setQuestions(formattedQuestions as QuizData<T>[]);
       }
     } catch (err) {
       setError(
