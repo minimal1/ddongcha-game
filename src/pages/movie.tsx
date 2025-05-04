@@ -22,7 +22,7 @@ const MovieQuizPage: NextPage = () => {
     showAnswer,
     nextQuestion,
     resetQuiz
-  } = useQuiz<MovieQuizQuestion>({
+  } = useQuiz({
     questions,
   });
 
@@ -58,8 +58,8 @@ const MovieQuizPage: NextPage = () => {
 
     return (
       <div className={styles.startScreen}>
-        <h2>영화 제목, 대사 맞추기</h2>
-        <p>유명한 영화의 제목과 대사를 맞추는 퀴즈입니다.</p>
+        <h2>영화 제목 맞추기</h2>
+        <p>유명한 영화의 제목을 맞추는 퀴즈입니다.</p>
         <p>총 {questions.length}개의 문제가 준비되었습니다.</p>
         <button className={styles.primaryButton} onClick={startQuiz}>퀴즈 시작하기</button>
       </div>
@@ -134,11 +134,11 @@ const MovieQuizPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>영화 제목, 대사 맞추기 - 똥차에이션 퀴즈</title>
-        <meta name="description" content="유명 영화의 제목과 대사를 맞추는 퀴즈" />
+        <title>영화 제목 맞추기 - 똥차에이션 퀴즈</title>
+        <meta name="description" content="유명 영화의 제목을 맞추는 퀴즈" />
       </Head>
       <QuizLayout
-        title="영화 제목, 대사 맞추기"
+        title="영화 제목 맞추기"
         currentQuestion={quizState !== QuizState.READY && quizState !== QuizState.FINISHED ? currentQuestionIndex + 1 : undefined}
         totalQuestions={quizState !== QuizState.READY && quizState !== QuizState.FINISHED ? questions.length : undefined}
       >
