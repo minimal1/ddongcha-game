@@ -4,12 +4,17 @@ import QuizLayout from '@/features/user/quiz/ui/QuizLayout';
 import { useQuiz, QuizState } from '@/features/user/quiz/lib/useQuiz';
 import { PhotoYearQuestion } from '@/features/user/quiz/model/quiz.model';
 import styles from '@/features/user/quiz/ui/PhotoYearQuiz.module.css';
+import useQuizData from '@/features/user/quiz/lib/useQuizData';
 
-
-const questions: PhotoYearQuestion[] = []
 
 const PhotoYearQuizPage: NextPage = () => {
-  // 퀴즈 훅 사용
+  // Supabase에서 스냅 사진 퀴즈 데이터 가져오기
+  const { questions, loading, error } = useQuizData({
+    questionType: 'photo-year',
+    limit: 50,
+  });
+
+  // 퀴즈 상태 관리
   const {
     currentQuestion,
     currentQuestionIndex,
@@ -23,16 +28,46 @@ const PhotoYearQuizPage: NextPage = () => {
   });
 
   // 퀴즈 시작 화면 렌더링
-  const renderStartScreen = () => (
-    <div className={styles.startScreen}>
-      <h2>스타 사진 퀴즈 - 촬영 연도</h2>
-      <p>사진이 촬영된 연도를 맞추는 퀴즈입니다.</p>
-      <p>총 {questions.length}개의 질문이 출제됩니다.</p>
-      <button className={styles.primaryButton} onClick={startQuiz}>퀴즈 시작하기</button>
-    </div>
-  );
+  const renderStartScreen = () => {
+    if (loading) {
+      return (
+        <div className={styles.startScreen}>
+          <h2>스냅 사진 퀴즈 데이터 로딩 중...</h2>
+          <p>잠시만 기다려주세요.</p>
+        </div>
+      );
+    }
 
-  // 질문 화면 렌더링
+    if (error) {
+      return (
+        <div className={styles.startScreen}>
+          <h2>오류 발생</h2>
+          <p>스냅 사진 퀴즈 데이터를 불러오는 중 오류가 발생했습니다.</p>
+          <p>{error.message}</p>
+        </div>
+      );
+    }
+
+    if (questions.length === 0) {
+      return (
+        <div className={styles.startScreen}>
+          <h2>퀴즈 준비</h2>
+          <p>현재 사용 가능한 퀴즈가 없습니다.</p>
+        </div>
+      );
+    }
+
+    return (
+      <div className={styles.startScreen}>
+        <h2>스냅 사진 퀴즈 - 촬영 연도</h2>
+        <p>사진이 촬영된 연도를 맞추는 퀴즈입니다.</p>
+        <p>총 {questions.length}개의 문제가 준비되었습니다.</p>
+        <button className={styles.primaryButton} onClick={startQuiz}>퀴즈 시작하기</button>
+      </div>
+    );
+  };
+
+  // 문제 화면 렌더링
   const renderQuestionScreen = () => {
     if (!currentQuestion) return null;
     
@@ -41,7 +76,9 @@ const PhotoYearQuizPage: NextPage = () => {
         <div className={styles.photoContainer}>
           <div className={styles.photoWrapper}>
             <div className={styles.imagePlaceholder}>
-              [이미지: {currentQuestion.imagePath}]
+              {currentQuestion.imageUrls && currentQuestion.imageUrls.length > 0 
+                ? `[이미지: ${currentQuestion.imageUrls[0]}]`
+                : '[이미지가 없습니다]'}
             </div>
           </div>
         </div>
@@ -66,16 +103,18 @@ const PhotoYearQuizPage: NextPage = () => {
       <div className={styles.answerScreen}>
         <div className={styles.photoAnswerContainer}>
           <div className={styles.imagePlaceholder}>
-            [이미지: {currentQuestion.imagePath}]
+            {currentQuestion.imageUrls && currentQuestion.imageUrls.length > 0 
+              ? `[이미지: ${currentQuestion.imageUrls[0]}]`
+              : '[이미지가 없습니다]'}
           </div>
         </div>
         
         <div className={styles.answerDetails}>
-          <p>정답: <strong>{currentQuestion.correctAnswer}년</strong></p>
+          <p>정답: <strong>{currentQuestion.answer}년</strong></p>
         </div>
         
         <button className={styles.primaryButton} onClick={nextQuestion}>
-          {currentQuestionIndex < questions.length - 1 ? '다음 질문' : '결과 보기'}
+          {currentQuestionIndex < questions.length - 1 ? '다음 문제' : '결과 보기'}
         </button>
       </div>
     );
@@ -84,7 +123,7 @@ const PhotoYearQuizPage: NextPage = () => {
   // 결과 화면 렌더링
   const renderResultScreen = () => (
     <div className={styles.resultScreen}>
-      <h2>퀴즈 종료</h2>
+      <h2>퀴즈 완료</h2>
       <button className={styles.primaryButton} onClick={resetQuiz}>다시 시작하기</button>
     </div>
   );
@@ -108,11 +147,11 @@ const PhotoYearQuizPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>스타 사진 퀴즈 - 촬영 연도 - 똥차레크리에이션 게임</title>
+        <title>스냅 사진 퀴즈 - 촬영 연도 - 똥차에이션 퀴즈</title>
         <meta name="description" content="사진이 촬영된 연도를 맞추는 퀴즈" />
       </Head>
       <QuizLayout
-        title="스타 사진 퀴즈 - 촬영 연도"
+        title="스냅 사진 퀴즈 - 촬영 연도"
         currentQuestion={quizState !== QuizState.READY && quizState !== QuizState.FINISHED ? currentQuestionIndex + 1 : undefined}
         totalQuestions={quizState !== QuizState.READY && quizState !== QuizState.FINISHED ? questions.length : undefined}
       >
