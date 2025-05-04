@@ -12,6 +12,7 @@ import { QuestionType } from "@/entities/shared/quiz/model/question-type.model";
 
 interface UseQuizDataParams {
   questionType?: QuestionType;
+  limit?: number;
 }
 
 interface UseQuizDataReturn {
@@ -23,11 +24,12 @@ interface UseQuizDataReturn {
 
 /**
  * Supabase에서 퀴즈 데이터를 가져오는 커스텀 훅
- * @param params 퀴즈 조회 파라미터 (타입)
+ * @param params 퀴즈 조회 파라미터 (타입, 제한 개수)
  * @returns 퀴즈 질문 목록, 로딩 상태, 에러, 다시 가져오기 함수
  */
 export default function useQuizData({
   questionType,
+  limit = 10,
 }: UseQuizDataParams = {}): UseQuizDataReturn {
   const [questions, setQuestions] = useState<Quiz[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -42,24 +44,12 @@ export default function useQuizData({
       setLoading(true);
 
       // Supabase 쿼리 빌더
-      let query = supabase.from(TABLES.QUESTIONS).select("*");
+      let query = supabase.from(TABLES.QUESTIONS).select("*").limit(limit || 10);
 
       // 조건부 필터링
       if (questionType) {
-        // 퀴즈 타입에 따라 필터링
-        switch (questionType) {
-          case "trivia":
-            query = query.eq("type", "text");
-            break;
-          case "movie":
-            query = query.eq("type", "multiple");
-            break;
-          case "photo-year":
-          case "guess-who":
-            // 이미지 경로가 있는 퀴즈로 필터링
-            query = query.not("image_url", "is", null);
-            break;
-        }
+        // 퀴즈 타입에 따라 필터링 (이제 question_type 필드를 직접 사용)
+        query = query.eq("question_type", questionType);
       }
 
       const { data, error: fetchError } = await query;
@@ -72,53 +62,47 @@ export default function useQuizData({
         // 데이터를 적절한 모델 형태로 변환
         const formattedQuestions = data.map((item) => {
           const baseQuestion = {
-            uuid: item.id,
-            question: item.content,
+            uuid: item.uuid, // id → uuid로 변경됨
+            question: item.question, // content → question으로 변경됨
             answer: item.answer,
-            hints: item.hint ? [item.hint] : undefined,
+            hints: item.hints, // hint → hints(배열)로 변경됨
           };
 
           // 퀴즈 타입에 따라 다른 처리
-          if (item.type === "text") {
-            // Trivia Quiz
-            return {
-              ...baseQuestion,
-              questionType: "trivia",
-            } as TriviaQuizQuestion;
-          } else if (item.type === "multiple") {
-            // Movie Quiz
-            return {
-              ...baseQuestion,
-              questionType: "movie",
-            } as MovieQuizQuestion;
-          } else if (item.image_url) {
-            // 이미지 관련 퀴즈 (Photo-year 또는 Guess-who)
-            if (questionType === "guess-who") {
-              // Guess-who Quiz
+          switch (item.question_type) {
+            case "trivia":
               return {
                 ...baseQuestion,
-                questionType: "guess-who",
-                imageUrls: Array.isArray(item.image_url)
-                  ? item.image_url
-                  : [item.image_url],
-              } as GuessWhoQuizQuestion;
-            } else {
-              // Photo-year Quiz - 연도 관련 퀴즈
+                questionType: "trivia",
+              } as TriviaQuizQuestion;
+              
+            case "movie":
+              return {
+                ...baseQuestion,
+                questionType: "movie",
+              } as MovieQuizQuestion;
+              
+            case "photo-year":
               return {
                 ...baseQuestion,
                 questionType: "photo-year",
-                imageUrls: Array.isArray(item.image_url)
-                  ? item.image_url
-                  : [item.image_url],
+                imageUrls: item.image_urls || [],
               } as PhotoYearQuizQuestion;
-            }
+              
+            case "guess-who":
+              return {
+                ...baseQuestion,
+                questionType: "guess-who",
+                imageUrls: item.image_urls || [],
+              } as GuessWhoQuizQuestion;
+              
+            default:
+              // 기본값으로 Trivia Quiz 반환
+              return {
+                ...baseQuestion,
+                questionType: "trivia",
+              } as TriviaQuizQuestion;
           }
-
-          // 기본 값으로 Trivia Quiz 반환
-          return {
-            ...baseQuestion,
-            questionType: "trivia",
-          } as TriviaQuizQuestion;
         });
 
         setQuestions(formattedQuestions);
@@ -133,12 +117,12 @@ export default function useQuizData({
     } finally {
       setLoading(false);
     }
-  }, [questionType, supabase]);
+  }, [questionType, supabase, limit]);
 
   // 컴포넌트 마운트 시와 의존성 변경 시 데이터 가져오기
   useEffect(() => {
     fetchQuizData();
-  }, [questionType, fetchQuizData]);
+  }, [fetchQuizData]);
 
   // 외부에서 데이터를 다시 가져올 수 있는 함수 제공
   const refetch = async () => {
