@@ -1,19 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
-import { getQuizList } from '../api/quizAdminApi';
+import { useQuizList } from '../lib/useQuizList';
 import QuizListItem from './QuizListItem';
 import { QuestionType } from '@/entities/shared/quiz/model/question-type.model';
 import styles from './QuizList.module.css';
-
-interface Quiz {
-  id: string;
-  questionType: QuestionType;
-  question: string;
-  answer: string;
-  imageUrls?: string[];
-  hints?: string[];
-  created_at: string;
-}
 
 interface QuizListProps {
   initialQuizType?: QuestionType;
@@ -29,52 +19,29 @@ interface QuizListProps {
  */
 const QuizList: React.FC<QuizListProps> = ({ initialQuizType }) => {
   const router = useRouter();
-  const [quizzes, setQuizzes] = useState<Quiz[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [selectedType, setSelectedType] = useState<string | undefined>(initialQuizType);
   
-  // 페이지네이션 상태
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalQuizzes, setTotalQuizzes] = useState(0);
-  const [totalPages, setTotalPages] = useState(1);
-  const itemsPerPage = 50;
-
-  // 퀴즈 목록 로드
-  const loadQuizzes = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      
-      const { quizzes, total } = await getQuizList(
-        {
-          page: currentPage,
-          limit: itemsPerPage,
-          questionType: selectedType,
-        }
-      );
-      
-      setQuizzes(quizzes);
-      setTotalQuizzes(total);
-      setTotalPages(Math.ceil(total / itemsPerPage));
-    } catch (err: any) {
-      console.error('퀴즈 목록 로드 오류:', err);
-      setError(err.message || '퀴즈 목록을 로드하는 중 오류가 발생했습니다.');
-    } finally {
-      setLoading(false);
-    }
-  }, [currentPage, selectedType]);
-
-  // 컴포넌트 마운트 및 필터/페이지 변경 시 퀴즈 목록 로드
-  useEffect(() => {
-    loadQuizzes();
-  }, [selectedType, currentPage, loadQuizzes]);
+  // useQuizList 훅 사용
+  const {
+    quizzes,
+    loading,
+    error,
+    questionType,
+    currentPage,
+    totalQuizzes,
+    totalPages,
+    setQuestionType,
+    setCurrentPage,
+    refresh,
+  } = useQuizList({
+    initialQuestionType: initialQuizType,
+    initialPage: 1,
+    initialLimit: 50,
+  });
 
   // 퀴즈 타입 선택 핸들러
   const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
-    setSelectedType(value === 'all' ? undefined : value);
-    setCurrentPage(1); // 타입 변경 시 첫 페이지로 이동
+    setQuestionType(value === 'all' ? undefined : value);
   };
 
   // 페이지 변경 핸들러
@@ -88,8 +55,8 @@ const QuizList: React.FC<QuizListProps> = ({ initialQuizType }) => {
   };
 
   // 퀴즈 편집 페이지로 이동
-  const handleEditQuiz = (id: string) => {
-    router.push(`/admin/${id}`);
+  const handleEditQuiz = (uuid: string) => {
+    router.push(`/admin/${uuid}`);
   };
 
   return (
@@ -97,16 +64,16 @@ const QuizList: React.FC<QuizListProps> = ({ initialQuizType }) => {
       <div className={styles.header}>
         <div className={styles.filters}>
           <select
-            value={selectedType || 'all'}
+            value={questionType || 'all'}
             onChange={handleTypeChange}
             className={styles.typeSelect}
             aria-label="퀴즈 타입 필터"
           >
             <option value="all">모든 타입</option>
-            <option value="trivia">Trivia Quiz</option>
-            <option value="movie">Movie Quiz</option>
-            <option value="photo-year">Photo-year Quiz</option>
-            <option value="guess-who">Guess-who Quiz</option>
+            <option value="trivia">일반 퀴즈</option>
+            <option value="movie">영화 퀴즈</option>
+            <option value="photo-year">연도 퀴즈</option>
+            <option value="guess-who">인물 맞추기 퀴즈</option>
           </select>
         </div>
         
@@ -149,8 +116,16 @@ const QuizList: React.FC<QuizListProps> = ({ initialQuizType }) => {
             <ul className={styles.list}>
               {quizzes.map((quiz) => (
                 <QuizListItem
-                  key={quiz.id}
-                  quiz={quiz}
+                  key={quiz.uuid}
+                  quiz={{
+                    id: quiz.uuid,
+                    questionType: quiz.question_type,
+                    question: quiz.question,
+                    answer: quiz.answer,
+                    imageUrls: quiz.image_urls || [],
+                    hints: quiz.hints || [],
+                    created_at: quiz.created_at,
+                  }}
                   onEdit={handleEditQuiz}
                 />
               ))}
