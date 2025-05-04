@@ -2,7 +2,6 @@ import { NextPage } from 'next';
 import Head from 'next/head';
 import QuizLayout from '@/features/user/quiz/ui/QuizLayout';
 import { useQuiz, QuizState } from '@/features/user/quiz/lib/useQuiz';
-import { GuessWhoQuestion } from '@/features/user/quiz/model/quiz.model';
 import styles from '@/features/user/quiz/ui/GuessWhoQuiz.module.css';
 import useQuizData from '@/features/user/quiz/lib/useQuizData';
 
@@ -22,7 +21,7 @@ const GuessWhoQuizPage: NextPage = () => {
     showAnswer,
     nextQuestion,
     resetQuiz
-  } = useQuiz<GuessWhoQuestion>({
+  } = useQuiz({
     questions,
   });
 
@@ -142,7 +141,7 @@ const GuessWhoQuizPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>인물 사진 퀴즈 - 누구 일까 - 똥차에이션 퀴즈</title>
+        <title>인물 사진 퀴즈 - 누구 일까</title>
         <meta name="description" content="확대된 얼굴 사진을 보고 누구인지 맞추는 퀴즈" />
       </Head>
       <QuizLayout

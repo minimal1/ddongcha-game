@@ -125,7 +125,7 @@ const TriviaQuizPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>지식 퀴즈 게임 - 똥차에이트 게임</title>
+        <title>지식 퀴즈 게임</title>
         <meta name="description" content="다양한 분야의 지식 질문을 푸는 퀴즈 게임" />
       </Head>
       <QuizLayout

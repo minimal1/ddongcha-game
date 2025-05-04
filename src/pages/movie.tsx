@@ -134,7 +134,7 @@ const MovieQuizPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>영화 제목 맞추기 - 똥차에이션 퀴즈</title>
+        <title>영화 제목 맞추기</title>
         <meta name="description" content="유명 영화의 제목을 맞추는 퀴즈" />
       </Head>
       <QuizLayout

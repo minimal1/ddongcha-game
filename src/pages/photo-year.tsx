@@ -147,7 +147,7 @@ const PhotoYearQuizPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>스냅 사진 퀴즈 - 촬영 연도 - 똥차에이션 퀴즈</title>
+        <title>스냅 사진 퀴즈 - 촬영 연도</title>
         <meta name="description" content="사진이 촬영된 연도를 맞추는 퀴즈" />
       </Head>
       <QuizLayout
