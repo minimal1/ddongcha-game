@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
-import Dashboard from '@/components/Dashboard';
+import Dashboard from '@/features/user/dashboard/ui/Dashboard';
 
 const Home: NextPage = () => {
   return (

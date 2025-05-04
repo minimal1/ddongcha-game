@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { uploadImage, getImageUrl, BUCKETS } from '@/shared/config/storage';
+import { uploadImage, getImageUrl, BUCKETS } from '@/shared/supabase/lib/storage';
 import styles from './FileUploader.module.css';
 
 interface FileUploaderProps {

@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { NextPage } from 'next';
 import Head from 'next/head';
-import QuizLayout from '@/components/quiz/QuizLayout';
-import { useQuiz, QuizState } from '@/hooks/useQuiz';
-import { useQuizData } from '@/hooks/useQuizData';
-import styles from '@/styles/components/quiz/TriviaQuiz.module.css';
+import QuizLayout from '@/features/user/quiz/ui/QuizLayout';
+import { useQuiz, QuizState } from '@/features/user/quiz/lib/useQuiz';
+import styles from '@/features/user/quiz/ui/TriviaQuiz.module.css';
 
 type TriviaQuestion = {
   id: number;
@@ -13,56 +12,27 @@ type TriviaQuestion = {
   correctAnswer: string;
 };
 
-const TriviaQuizPage: NextPage = () => {
-  // API에서 퀴즈 데이터 가져오기
-  const { questions, timeLimit, loading, error } = useQuizData<TriviaQuestion>({
-    apiEndpoint: 'trivia-quiz'
-  });
+const questions: TriviaQuestion[] = []
 
+const TriviaQuizPage: NextPage = () => {
   // 퀴즈 훅 사용
   const {
     currentQuestion,
     currentQuestionIndex,
     quizState,
-    timeRemaining,
     startQuiz,
     showAnswer,
     nextQuestion,
     resetQuiz
   } = useQuiz<TriviaQuestion>({
     questions,
-    timeLimit
   });
-
-  // 로딩 화면
-  if (loading) {
-    return (
-      <QuizLayout title="상식 퀴즈 배틀">
-        <div className={styles.loadingContainer}>
-          <p>퀴즈 데이터를 불러오는 중...</p>
-        </div>
-      </QuizLayout>
-    );
-  }
-
-  // 에러 화면
-  if (error) {
-    return (
-      <QuizLayout title="상식 퀴즈 배틀">
-        <div className={styles.errorMessage}>
-          <p>퀴즈 데이터를 불러오는 중 오류가 발생했습니다.</p>
-          <p>{error.message}</p>
-        </div>
-      </QuizLayout>
-    );
-  }
 
   // 퀴즈 시작 화면 렌더링
   const renderStartScreen = () => (
     <div className={styles.startScreen}>
       <h2>상식 퀴즈 배틀</h2>
       <p>다양한 분야의 상식 문제를 푸는 퀴즈 게임입니다.</p>
-      <p>각 문제당 {timeLimit}초의 시간이 주어집니다.</p>
       <p>총 {questions.length}개의 문제가 출제됩니다.</p>
       <button className={styles.primaryButton} onClick={startQuiz}>게임 시작하기</button>
     </div>
@@ -134,8 +104,6 @@ const TriviaQuizPage: NextPage = () => {
         title="상식 퀴즈 배틀"
         currentQuestion={quizState !== QuizState.READY && quizState !== QuizState.FINISHED ? currentQuestionIndex + 1 : undefined}
         totalQuestions={quizState !== QuizState.READY && quizState !== QuizState.FINISHED ? questions.length : undefined}
-        timeRemaining={quizState === QuizState.QUESTION ? timeRemaining : undefined}
-        isGameOver={quizState === QuizState.FINISHED}
       >
         {renderContent()}
       </QuizLayout>

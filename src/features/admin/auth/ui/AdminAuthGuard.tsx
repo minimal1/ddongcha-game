@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useSupabaseContext } from '@/shared/context/SupabaseProvider';
+import { useSupabaseContext } from '@/shared/supabase/lib/SupabaseProvider';
 import { useAuth } from '../lib/useAuth';
 import styles from './AdminAuthGuard.module.css';
 

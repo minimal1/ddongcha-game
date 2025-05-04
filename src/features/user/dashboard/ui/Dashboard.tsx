@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import styles from '@/styles/components/Dashboard.module.css';
+import styles from './Dashboard.module.css';
 
 const Dashboard: React.FC = () => {
   const games = [
@@ -17,8 +17,8 @@ const Dashboard: React.FC = () => {
       icon: '🎬'
     },
     {
-      id: 'face-zoom',
-      title: '추억 사진 퀴즈 - 얼굴 줌 아웃',
+      id: 'guess-who',
+      title: '추억 사진 퀴즈 - 얼굴 맞추기',
       description: '확대된 얼굴 사진을 보고 누구인지 맞추는 게임입니다.',
       icon: '🔍'
     },

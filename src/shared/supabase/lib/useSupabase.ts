@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { supabase } from "../shared/config";
+import { supabase } from "./supabase";
 import { Session } from "@supabase/supabase-js";
 
 /**

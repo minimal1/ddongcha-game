@@ -16,7 +16,7 @@ export interface MovieQuestion {
 }
 
 // 얼굴 줌 퀴즈 문제
-export interface FaceZoomQuestion {
+export interface GuessWhoQuestion {
   id: number;
   imagePath: string;
   zoomLevels: number;

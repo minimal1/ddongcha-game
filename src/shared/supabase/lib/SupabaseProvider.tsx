@@ -1,7 +1,7 @@
 import React, { createContext, useContext, ReactNode } from 'react';
 import { Session, User } from '@supabase/supabase-js';
-import { useSupabase } from '../../hooks/useSupabase';
-import { supabase } from '../config';
+import { useSupabase } from './useSupabase';
+import { supabase } from './supabase';
 
 // Supabase 컨텍스트 인터페이스 정의
 interface SupabaseContextValue {

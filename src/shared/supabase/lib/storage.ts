@@ -1,9 +1,9 @@
-import { supabase } from './supabase';
+import { supabase } from "./supabase";
 
 // 스토리지 버킷 이름 상수 정의
 export const BUCKETS = {
-  GAME_ASSETS: 'game_assets',
-  PROFILE_IMAGES: 'profile_images',
+  GAME_ASSETS: "game_assets",
+  PROFILE_IMAGES: "profile_images",
 };
 
 // 이미지 업로드 함수
@@ -16,14 +16,14 @@ export const uploadImage = async (
     const { data, error } = await supabase.storage
       .from(bucketName)
       .upload(filePath, file, {
-        cacheControl: '3600',
+        cacheControl: "3600",
         upsert: true,
       });
 
     if (error) throw error;
     return data;
   } catch (error) {
-    console.error('이미지 업로드 오류:', error);
+    console.error("이미지 업로드 오류:", error);
     throw error;
   }
 };
@@ -37,11 +37,13 @@ export const getImageUrl = (bucketName: string, path: string) => {
 // 이미지 삭제 함수
 export const deleteImage = async (bucketName: string, filePath: string) => {
   try {
-    const { error } = await supabase.storage.from(bucketName).remove([filePath]);
+    const { error } = await supabase.storage
+      .from(bucketName)
+      .remove([filePath]);
     if (error) throw error;
     return true;
   } catch (error) {
-    console.error('이미지 삭제 오류:', error);
+    console.error("이미지 삭제 오류:", error);
     throw error;
   }
 };
@@ -51,12 +53,12 @@ export const listImages = async (bucketName: string, folderPath?: string) => {
   try {
     const { data, error } = await supabase.storage
       .from(bucketName)
-      .list(folderPath || '');
+      .list(folderPath || "");
 
     if (error) throw error;
     return data;
   } catch (error) {
-    console.error('이미지 목록 가져오기 오류:', error);
+    console.error("이미지 목록 가져오기 오류:", error);
     throw error;
   }
 };

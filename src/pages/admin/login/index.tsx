@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useSupabaseContext } from '@/shared/context/SupabaseProvider';
+import { useSupabaseContext } from '@/shared/supabase/lib/SupabaseProvider';
 import styles from './Login.module.css';
 import Link from 'next/link';
 
@@ -108,15 +108,6 @@ const LoginPage: React.FC = () => {
                 disabled={isLoggingIn}
                 className={styles.input}
               />
-            </div>
-
-            <div className={styles.forgotPassword}>
-              <a 
-                href="/reset-password/request" 
-                onClick={(e) => { e.preventDefault(); router.push('/reset-password/request'); }}
-              >
-                비밀번호를 잊으셨나요?
-              </a>
             </div>
 
             <button 

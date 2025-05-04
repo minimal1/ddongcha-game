@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app'
-import Layout from '@/components/Layout'
-import { SupabaseProvider } from '@/shared/context/SupabaseProvider'
-import '@/styles/globals.css'
+import Layout from '@/shared/ui/layout/Layout'
+import { SupabaseProvider } from '@/shared/supabase/lib/SupabaseProvider'
+import '@/shared/styles/globals.css'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
