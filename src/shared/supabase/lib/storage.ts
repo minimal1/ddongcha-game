@@ -3,7 +3,6 @@ import { supabase } from "./supabase";
 // 스토리지 버킷 이름 상수 정의
 export const BUCKETS = {
   GAME_ASSETS: "game_assets",
-  PROFILE_IMAGES: "profile_images",
 };
 
 // 이미지 업로드 함수
