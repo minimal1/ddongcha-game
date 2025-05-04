@@ -7,6 +7,7 @@ import QuizFormFields from '@/features/admin/quiz/ui/QuizFormFields';
 import { QuestionType } from '@/entities/shared/quiz/model/question-type.model';
 import { createQuiz } from '@/features/admin/quiz/api/quizAdminApi';
 import styles from './Create.module.css';
+import { QuizRequest } from '@/features/admin/quiz/model/quiz-request.model';
 
 /**
  * 퀴즈 생성 페이지
@@ -52,12 +53,12 @@ const CreateQuizPage: React.FC = () => {
     const filteredHints = hints.filter((hint) => hint.trim() !== '');
 
     // 퀴즈 생성 데이터
-    const quizData = {
-      questionType,
+    const quizData: QuizRequest = {
+      question_type: questionType,
       question: question.trim(),
       answer: answer.trim(),
-      hints: filteredHints.length > 0 ? filteredHints : undefined,
-      imageUrls: imageUrls.length > 0 ? imageUrls : undefined,
+      hints: filteredHints.length > 0 ? filteredHints : [],
+      image_urls: imageUrls.length > 0 ? imageUrls : [],
     };
 
     try {
