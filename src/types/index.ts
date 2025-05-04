@@ -1,4 +1,4 @@
-// 상식 퀴즈 문제
+// 일반 퀴즈 문제
 export interface TriviaQuestion {
   id: number;
   question: string;
@@ -32,4 +32,13 @@ export interface PhotoYearQuestion {
   maxYear: number;
   correctAnswer: number;
   options: number[];
+}
+
+// Guess-who 퀴즈 문제
+export interface GuessWhoQuestion {
+  id: number;
+  question: string;
+  imagePaths: string[]; // 3장의 사진 경로를 저장하는 배열
+  correctAnswer: string;
+  options: string[]; // 정답 선택지
 }
