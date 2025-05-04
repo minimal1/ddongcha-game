@@ -8,6 +8,7 @@ interface ImageUploaderProps {
   initialImages?: string[];
   onChange: (urls: string[]) => void;
   maxImages?: number;
+  disabled?: boolean;
 }
 
 /**
@@ -23,6 +24,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
   initialImages = [],
   onChange,
   maxImages = 1,
+  // disabled = false,
 }) => {
   const [imageUrls, setImageUrls] = useState<string[]>(initialImages);
   const [uploading, setUploading] = useState(false);
