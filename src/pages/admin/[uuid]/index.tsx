@@ -79,10 +79,11 @@ const QuizDetailPage: React.FC = () => {
     router.push('/admin');
   };
 
-  // 폼 필드 변경 핸들러 - 올바른 상태 업데이트 방식 적용
+  // 폼 필드 변경 핸들러 - 로컬 상태 업데이트로 수정
   const handleQuestionChange = (value: string) => {
     if (!quiz) return;
-    updateQuiz({
+    // 새 객체를 만들어 setQuiz를 호출하여 상태 업데이트
+    setQuiz({
       ...quiz,
       question: value
     });
@@ -90,7 +91,7 @@ const QuizDetailPage: React.FC = () => {
 
   const handleAnswerChange = (value: string) => {
     if (!quiz) return;
-    updateQuiz({
+    setQuiz({
       ...quiz,
       answer: value
     });
@@ -98,7 +99,7 @@ const QuizDetailPage: React.FC = () => {
 
   const handleHintsChange = (values: string[]) => {
     if (!quiz) return;
-    updateQuiz({
+    setQuiz({
       ...quiz,
       hints: values
     });
@@ -106,11 +107,33 @@ const QuizDetailPage: React.FC = () => {
 
   const handleImageUrlsChange = (urls: string[]) => {
     if (!quiz) return;
-    updateQuiz({
+    setQuiz({
       ...quiz,
       imageUrls: urls
     });
   };
+
+  // Quiz 상태를 업데이트하는 함수를 추가
+  const setQuiz = (newQuizValue: QuizFormValues) => {
+    // useQuizDetail 훅의 내부 상태 업데이트
+    if (window.temp_quiz_state) {
+      window.temp_quiz_state = newQuizValue;
+      // 강제 리렌더링을 위한 상태 업데이트 트릭
+      forceUpdate();
+    }
+  };
+
+  // 강제 리렌더링을 위한 상태
+  const [, forceRender] = useState({});
+  const forceUpdate = () => forceRender({});
+
+  // quiz 상태를 임시 전역 변수에 저장
+  if (quiz && !window.temp_quiz_state) {
+    window.temp_quiz_state = quiz;
+  }
+
+  // 실제 사용할 퀴즈 데이터 (window.temp_quiz_state가 있으면 그것을 사용)
+  const currentQuiz = window.temp_quiz_state || quiz;
 
   return (
     <AdminLayout title="퀴즈 관리">
@@ -134,7 +157,7 @@ const QuizDetailPage: React.FC = () => {
             목록으로 돌아가기
           </button>
         </div>
-      ) : !quiz ? (
+      ) : !currentQuiz ? (
         <div className={styles.error}>
           <p>퀴즈를 찾을 수 없습니다.</p>
           <button
@@ -164,21 +187,21 @@ const QuizDetailPage: React.FC = () => {
             {/* 퀴즈 유형 정보 */}
             <div className={styles.quizType}>
               <span className={styles.label}>퀴즈 유형:</span>
-              <span className={`${styles.badge} ${styles[quiz.questionType]}`}>
-                {quiz.questionType === 'trivia' && '일반 퀴즈'}
-                {quiz.questionType === 'movie' && '영화 퀴즈'}
-                {quiz.questionType === 'photo-year' && '연도 퀴즈'}
-                {quiz.questionType === 'guess-who' && '인물 맞추기 퀴즈'}
+              <span className={`${styles.badge} ${styles[currentQuiz.questionType]}`}>
+                {currentQuiz.questionType === 'trivia' && '일반 퀴즈'}
+                {currentQuiz.questionType === 'movie' && '영화 퀴즈'}
+                {currentQuiz.questionType === 'photo-year' && '연도 퀴즈'}
+                {currentQuiz.questionType === 'guess-who' && '인물 맞추기 퀴즈'}
               </span>
             </div>
 
             {/* 퀴즈 필드 */}
             <QuizFormFields
-              questionType={quiz.questionType}
-              question={quiz.question}
-              answer={quiz.answer}
-              hints={quiz.hints}
-              imageUrls={quiz.imageUrls}
+              questionType={currentQuiz.questionType}
+              question={currentQuiz.question}
+              answer={currentQuiz.answer}
+              hints={currentQuiz.hints}
+              imageUrls={currentQuiz.imageUrls}
               onQuestionChange={handleQuestionChange}
               onAnswerChange={handleAnswerChange}
               onHintsChange={handleHintsChange}
@@ -242,5 +265,12 @@ const QuizDetailPage: React.FC = () => {
     </AdminLayout>
   );
 };
+
+// TypeScript에서 window 객체에 임시 상태 저장을 위한 타입 정의
+declare global {
+  interface Window {
+    temp_quiz_state: any;
+  }
+}
 
 export default QuizDetailPage;
