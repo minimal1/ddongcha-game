@@ -1,11 +1,11 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from "@supabase/supabase-js";
 
 // Supabase 클라이언트 인스턴스를 한 번만 생성하도록 설정
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables');
+  throw new Error("Missing Supabase environment variables");
 }
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
@@ -13,19 +13,11 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     persistSession: true,
     autoRefreshToken: true,
   },
-  realtime: {
-    params: {
-      eventsPerSecond: 10,
-    },
-  },
 });
 
 // 게임 관련 데이터베이스 테이블 상수 정의
 export const TABLES = {
-  GAME_SESSIONS: 'game_sessions',
-  QUESTIONS: 'game_questions',
-  PLAYERS: 'game_players',
-  PLAYER_ANSWERS: 'player_answers',
+  QUESTIONS: "game_questions",
 };
 
 // Supabase 기능 래퍼 함수들
