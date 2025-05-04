@@ -23,7 +23,7 @@ const AdminAuthGuard: React.FC<AdminAuthGuardProps> = ({ children }) => {
     const checkAuth = async () => {
       // 로그인 체크 - 로그인되어있지 않은 경우
       if (!sessionLoading && !session) {
-        router.push('/login?redirect=' + encodeURIComponent(router.asPath));
+        router.push('/admin/login?redirect=' + encodeURIComponent(router.asPath));
         return;
       }
       
