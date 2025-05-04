@@ -7,7 +7,7 @@ import QuizFormFields from '@/features/admin/quiz/ui/QuizFormFields';
 import { QuestionType } from '@/entities/shared/quiz/model/question-type.model';
 import { createQuiz } from '@/features/admin/quiz/api/quizAdminApi';
 import styles from './Create.module.css';
-import { QuizRequest } from '@/features/admin/quiz/model/quiz-request.model';
+import { QuizFormValues, formToApiValues, validateQuizForm } from '@/features/admin/quiz/lib/quizFormUtils';
 
 /**
  * 퀴즈 생성 페이지
@@ -18,54 +18,32 @@ const CreateQuizPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   
   // 퀴즈 데이터 상태
-  const [questionType, setQuestionType] = useState<QuestionType | ''>('');
-  const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
-  const [hints, setHints] = useState<string[]>([]);
-  const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const [formValues, setFormValues] = useState<QuizFormValues>({
+    questionType: '' as QuestionType,
+    question: '',
+    answer: '',
+    hints: [],
+    imageUrls: [],
+  });
 
   // 폼 제출 처리
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!questionType) {
-      setError('퀴즈 유형을 선택해주세요.');
+    // 폼 유효성 검사
+    const validationError = validateQuizForm(formValues);
+    if (validationError) {
+      setError(validationError);
       return;
     }
-
-    if (!question.trim()) {
-      setError('문제를 입력해주세요.');
-      return;
-    }
-
-    if (!answer.trim()) {
-      setError('정답을 입력해주세요.');
-      return;
-    }
-
-    // 이미지가 필요한 퀴즈 타입인데 이미지가 없는 경우
-    if ((questionType === 'photo-year' || questionType === 'guess-who') && imageUrls.length === 0) {
-      setError('이미지를 업로드해주세요.');
-      return;
-    }
-
-    // 힌트에서 빈 값 제거
-    const filteredHints = hints.filter((hint) => hint.trim() !== '');
-
-    // 퀴즈 생성 데이터
-    const quizData: QuizRequest = {
-      question_type: questionType,
-      question: question.trim(),
-      answer: answer.trim(),
-      hints: filteredHints.length > 0 ? filteredHints : [],
-      image_urls: imageUrls.length > 0 ? imageUrls : [],
-    };
 
     try {
       setLoading(true);
       setError(null);
       
-      await createQuiz(quizData);
+      // 폼 데이터를 API 형식으로 변환하여 전송
+      const apiData = formToApiValues(formValues);
+      await createQuiz(apiData);
       
       // 성공 후 목록 페이지로 이동
       router.push('/admin');
@@ -84,11 +62,42 @@ const CreateQuizPage: React.FC = () => {
 
   // 퀴즈 유형 변경 시 필드 초기화
   const handleQuestionTypeChange = (type: QuestionType) => {
-    setQuestionType(type);
-    setQuestion('');
-    setAnswer('');
-    setHints([]);
-    setImageUrls([]);
+    setFormValues({
+      questionType: type,
+      question: '',
+      answer: '',
+      hints: [],
+      imageUrls: [],
+    });
+  };
+
+  // 각 필드 변경 핸들러
+  const handleQuestionChange = (value: string) => {
+    setFormValues(prev => ({
+      ...prev,
+      question: value
+    }));
+  };
+
+  const handleAnswerChange = (value: string) => {
+    setFormValues(prev => ({
+      ...prev,
+      answer: value
+    }));
+  };
+
+  const handleHintsChange = (values: string[]) => {
+    setFormValues(prev => ({
+      ...prev,
+      hints: values
+    }));
+  };
+
+  const handleImageUrlsChange = (urls: string[]) => {
+    setFormValues(prev => ({
+      ...prev,
+      imageUrls: urls
+    }));
   };
 
   return (
@@ -101,23 +110,23 @@ const CreateQuizPage: React.FC = () => {
       <form onSubmit={handleSubmit} className={styles.form}>
         {/* 퀴즈 유형 선택 */}
         <QuizTypeSelector
-          value={questionType}
+          value={formValues.questionType}
           onChange={handleQuestionTypeChange}
           disabled={loading}
         />
 
         {/* 퀴즈 유형이 선택된 경우 해당 유형의 필드 표시 */}
-        {questionType && (
+        {formValues.questionType && (
           <QuizFormFields
-            questionType={questionType}
-            question={question}
-            answer={answer}
-            hints={hints}
-            imageUrls={imageUrls}
-            onQuestionChange={setQuestion}
-            onAnswerChange={setAnswer}
-            onHintsChange={setHints}
-            onImageUrlsChange={setImageUrls}
+            questionType={formValues.questionType}
+            question={formValues.question}
+            answer={formValues.answer}
+            hints={formValues.hints}
+            imageUrls={formValues.imageUrls}
+            onQuestionChange={handleQuestionChange}
+            onAnswerChange={handleAnswerChange}
+            onHintsChange={handleHintsChange}
+            onImageUrlsChange={handleImageUrlsChange}
             disabled={loading}
           />
         )}
@@ -138,7 +147,7 @@ const CreateQuizPage: React.FC = () => {
           <button
             type="submit"
             className={styles.submitButton}
-            disabled={loading || !questionType}
+            disabled={loading || !formValues.questionType}
           >
             {loading ? '생성 중...' : '퀴즈 생성'}
           </button>
