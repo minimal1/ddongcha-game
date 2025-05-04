@@ -1,35 +1,49 @@
-// 상식 퀴즈 문제
-export interface TriviaQuestion {
-  id: number;
+// 퀴즈 타입 정의
+export type QuestionType = 'trivia' | 'movie' | 'photo-year' | 'guess-who';
+
+// 기본 퀴즈 인터페이스 (공통 필드)
+export interface QuizQuestion {
+  id: string; // UUID 형식으로 변경
+  questionType: QuestionType;
   question: string;
-  options: string[];
-  correctAnswer: string;
+  answer: string;
+  hints?: string[]; // 선택적 힌트
 }
 
-// 영화 퀴즈 문제
-export interface MovieQuestion {
-  id: number;
-  type: "title" | "quote";
-  content: string;
-  correctAnswer: string;
-  options: string[];
+// 이미지가 있는 퀴즈 인터페이스 (Photo-year, Guess-who)
+export interface ImageQuizQuestion extends QuizQuestion {
+  imageUrls: string[]; // 여러 이미지 URL을 지원
 }
 
-// 얼굴 줌 퀴즈 문제
-export interface GuessWhoQuestion {
-  id: number;
-  imagePath: string;
-  zoomLevels: number;
-  correctAnswer: string;
-  options: string[];
+// 퀴즈 타입별 특화 인터페이스
+export interface TriviaQuizQuestion extends QuizQuestion {
+  questionType: 'trivia';
 }
 
-// 사진 연도 퀴즈 문제
-export interface PhotoYearQuestion {
-  id: number;
-  imagePath: string;
-  minYear: number;
-  maxYear: number;
-  correctAnswer: number;
-  options: number[];
+export interface MovieQuizQuestion extends QuizQuestion {
+  questionType: 'movie';
+}
+
+export interface PhotoYearQuizQuestion extends ImageQuizQuestion {
+  questionType: 'photo-year';
+}
+
+export interface GuessWhoQuizQuestion extends ImageQuizQuestion {
+  questionType: 'guess-who';
+}
+
+// 유니온 타입을 통한 모든 퀴즈 타입 통합
+export type Quiz = 
+  | TriviaQuizQuestion 
+  | MovieQuizQuestion 
+  | PhotoYearQuizQuestion 
+  | GuessWhoQuizQuestion;
+
+// 퀴즈 생성/수정을 위한 요청 인터페이스
+export interface QuizRequest {
+  questionType: QuestionType;
+  question: string;
+  imageUrls?: string[];
+  answer: string;
+  hints?: string[];
 }
