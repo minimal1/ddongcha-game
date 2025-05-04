@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { getQuizList } from '../api/quizAdminApi';
 import QuizListItem from './QuizListItem';
@@ -38,18 +38,20 @@ const QuizList: React.FC<QuizListProps> = ({ initialQuizType }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalQuizzes, setTotalQuizzes] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 50;
 
   // 퀴즈 목록 로드
-  const loadQuizzes = async () => {
+  const loadQuizzes = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
       
       const { quizzes, total } = await getQuizList(
-        selectedType,
-        currentPage,
-        itemsPerPage
+        {
+          page: currentPage,
+          limit: itemsPerPage,
+          questionType: selectedType,
+        }
       );
       
       setQuizzes(quizzes);
@@ -61,12 +63,12 @@ const QuizList: React.FC<QuizListProps> = ({ initialQuizType }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentPage, selectedType]);
 
   // 컴포넌트 마운트 및 필터/페이지 변경 시 퀴즈 목록 로드
   useEffect(() => {
     loadQuizzes();
-  }, [selectedType, currentPage]);
+  }, [selectedType, currentPage, loadQuizzes]);
 
   // 퀴즈 타입 선택 핸들러
   const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
