@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { QuizQuestion } from "../model/quiz.model";
 
 // 퀴즈 상태 타입
 export enum QuizState {
@@ -8,18 +9,12 @@ export enum QuizState {
   FINISHED = "finished",
 }
 
-// 기본 퀴즈 문제 인터페이스
-export interface BaseQuestion {
-  id: number;
-  correctAnswer: string | number;
-}
-
-interface UseQuizProps<T extends BaseQuestion> {
+interface UseQuizProps<T extends QuizQuestion> {
   questions: T[];
   onFinish?: (totalQuestions: number) => void;
 }
 
-interface UseQuizReturn<T extends BaseQuestion> {
+interface UseQuizReturn<T extends QuizQuestion> {
   currentQuestion: T | null;
   currentQuestionIndex: number;
   quizState: QuizState;
@@ -29,7 +24,7 @@ interface UseQuizReturn<T extends BaseQuestion> {
   resetQuiz: () => void;
 }
 
-export function useQuiz<T extends BaseQuestion>({
+export function useQuiz<T extends QuizQuestion>({
   questions,
   onFinish,
 }: UseQuizProps<T>): UseQuizReturn<T> {
