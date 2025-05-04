@@ -14,23 +14,23 @@ interface AdminAuthGuardProps {
  */
 const AdminAuthGuard: React.FC<AdminAuthGuardProps> = ({ children }) => {
   const router = useRouter();
-  const { user, session, loading: sessionLoading } = useSupabaseContext();
+  const { user, loading: sessionLoading } = useAuth();
   
   
   useEffect(() => {
     const checkAuth = async () => {
       // 로그인 확인 - 로그인되어있지 않은 경우
-      if (!sessionLoading && !session) {
+      if (!sessionLoading && !user) {
         router.push('/admin/login?redirect=' + encodeURIComponent(router.asPath));
         return;
       }
     };
     
     checkAuth();
-  }, [user, session, sessionLoading, router]);
+  }, [user, sessionLoading, router]);
   
   // 로딩 처리 - 관리자 접근 확인 중인 경우
-  if (sessionLoading) {
+  if (sessionLoading || !user) {
     return (
       <div className={styles.loading}>
         <div className={styles.spinner}></div>

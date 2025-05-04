@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useSupabaseContext } from '@/shared/supabase/lib/SupabaseProvider';
 import styles from './Login.module.css';
 import Link from 'next/link';
+import useAuth from '@/features/admin/auth/lib/useAuth';
 
 /**
  * 로그인 페이지 컴포넌트
  */
 const LoginPage: React.FC = () => {
   const router = useRouter();
-  const { supabase, session, loading } = useSupabaseContext();
+  const {user, loading, signInWithPassword} = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
@@ -19,11 +19,12 @@ const LoginPage: React.FC = () => {
 
   // 이미 로그인한 경우 리디렉션
   useEffect(() => {
-    if (!loading && session) {
+    console.log('Session:', user);
+    if (user) {
       // 리디렉션 쿼리 파라미터가 있으면 해당 페이지로, 없으면 관리자 페이지로
       router.push((redirect as string) || '/admin');
     }
-  }, [session, loading, router, redirect]);
+  }, [user, router, redirect]);
 
   // 로그인 핸들러
   const handleLogin = async (e: React.FormEvent) => {
@@ -37,10 +38,10 @@ const LoginPage: React.FC = () => {
 
     try {
       setIsLoggingIn(true);
-      const { error } = await supabase.auth.signInWithPassword({
+      const { error } = await signInWithPassword(
         email,
         password,
-      });
+      );
 
       if (error) {
         throw error;
