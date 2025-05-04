@@ -28,7 +28,7 @@ const QuizListItem: React.FC<QuizListItemProps> = ({ quiz, onEdit }) => {
   const getQuizTypeLabel = (type: QuestionType): string => {
     switch (type) {
       case 'trivia':
-        return '일반 퀴즈';
+        return '상식 퀴즈';
       case 'movie':
         return '영화 퀴즈';
       case 'photo-year':
@@ -50,7 +50,7 @@ const QuizListItem: React.FC<QuizListItemProps> = ({ quiz, onEdit }) => {
   };
 
   // 문제 내용 요약 (너무 길면 자르기)
-  const truncateText = (text: string, maxLength: number = 50): string => {
+  const truncateText = (text: string, maxLength = 50): string => {
     if (text.length <= maxLength) return text;
     return text.slice(0, maxLength) + '...';
   };
