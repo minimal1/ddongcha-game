@@ -30,7 +30,7 @@ const MovieFields: React.FC<MovieFieldsProps> = (props) => {
         </p>
         <div className={styles.example}>
           <p className={styles.exampleTitle}>예시:</p>
-          <p className={styles.exampleQuestion}>문제: "내 이름은 포레스트, 포레스트 검프입니다."</p>
+          <p className={styles.exampleQuestion}>문제: 내 이름은 포레스트, 포레스트 검프입니다.</p>
           <p className={styles.exampleAnswer}>정답: 포레스트 검프</p>
         </div>
       </div>
