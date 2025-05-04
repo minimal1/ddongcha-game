@@ -41,36 +41,11 @@ export const useAuth = () => {
     [supabase]
   );
 
-  /**
-   * 로그아웃
-   */
-  const signOut = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const { error } = await supabase.auth.signOut();
-
-      if (error) {
-        throw error;
-      }
-
-      return { error: null };
-    } catch (err) {
-      const authError = err as AuthError;
-      setError(authError.message || "로그아웃 중 오류가 발생했습니다.");
-      return { error: authError };
-    } finally {
-      setLoading(false);
-    }
-  }, [supabase]);
-
   return {
     user,
     loading,
     error,
     signInWithPassword,
-    signOut,
   };
 };
 
