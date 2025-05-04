@@ -1,0 +1,180 @@
+.header {
+  background-color: #1a1a2e;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+}
+
+.logo {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.logo a {
+  color: white;
+  text-decoration: none;
+}
+
+.navList {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 1.5rem;
+}
+
+.navItem {
+  font-size: 1rem;
+}
+
+.navItem a {
+  color: #e6e6e6;
+  text-decoration: none;
+  padding: 0.5rem 0;
+  transition: color 0.2s;
+}
+
+.navItem.active a {
+  color: #3498db;
+  font-weight: bold;
+}
+
+.navItem a:hover {
+  color: white;
+}
+
+.logoutButton {
+  background: none;
+  border: none;
+  color: #e6e6e6;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  transition: color 0.2s;
+}
+
+.logoutButton:hover {
+  color: #f44336;
+}
+
+/* 모바일 메뉴 스타일 */
+.mobileMenuButton {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  position: relative;
+}
+
+.hamburger, .hamburger:before, .hamburger:after {
+  content: '';
+  position: absolute;
+  height: 2px;
+  background: white;
+  transition: all 0.3s ease-in-out;
+}
+
+.hamburger {
+  width: 24px;
+  top: 14px;
+  left: 3px;
+}
+
+.hamburger:before {
+  width: 24px;
+  top: -8px;
+  left: 0;
+}
+
+.hamburger:after {
+  width: 24px;
+  top: 8px;
+  left: 0;
+}
+
+.mobileNav {
+  display: none;
+  position: absolute;
+  top: 64px;
+  left: 0;
+  right: 0;
+  background-color: #1a1a2e;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mobileNavList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mobileNavItem {
+  padding: 0.5rem 0;
+}
+
+.mobileNavItem a {
+  color: #e6e6e6;
+  text-decoration: none;
+  display: block;
+  transition: color 0.2s;
+}
+
+.mobileNavItem.active a {
+  color: #3498db;
+  font-weight: bold;
+}
+
+.mobileNavItem a:hover {
+  color: white;
+}
+
+.mobileLogoutButton {
+  background: none;
+  border: none;
+  color: #e6e6e6;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  text-align: left;
+  width: 100%;
+  transition: color 0.2s;
+}
+
+.mobileLogoutButton:hover {
+  color: #f44336;
+}
+
+/* 미디어 쿼리 - 모바일 */
+@media (max-width: 768px) {
+  .desktopNav {
+    display: none;
+  }
+
+  .mobileMenuButton {
+    display: block;
+  }
+
+  .mobileNav {
+    display: block;
+  }
+}
