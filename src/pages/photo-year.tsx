@@ -2,10 +2,10 @@ import { NextPage } from 'next';
 import Head from 'next/head';
 import QuizLayout from '@/features/user/quiz/ui/QuizLayout';
 import { useQuiz, QuizState } from '@/features/user/quiz/lib/useQuiz';
-import { PhotoYearQuizQuestion } from '@/features/user/quiz/model/quiz.model';
+import { PhotoYearQuestion } from '@/features/user/quiz/model/quiz.model';
 import styles from '@/features/user/quiz/ui/PhotoYearQuiz.module.css';
 import useQuizData from '@/features/user/quiz/lib/useQuizData';
-
+import Image from 'next/image';
 
 const PhotoYearQuizPage: NextPage = () => {
   // Supabase에서 스냅 사진 퀴즈 데이터 가져오기
@@ -23,7 +23,7 @@ const PhotoYearQuizPage: NextPage = () => {
     showAnswer,
     nextQuestion,
     resetQuiz
-  } = useQuiz({
+  } = useQuiz<PhotoYearQuestion>({
     questions,
   });
 
@@ -59,7 +59,7 @@ const PhotoYearQuizPage: NextPage = () => {
 
     return (
       <div className={styles.startScreen}>
-        <h2>사진 퀴즈 - 촬영 연도</h2>
+        <h2>스냅 사진 퀴즈 - 촬영 연도</h2>
         <p>사진이 촬영된 연도를 맞추는 퀴즈입니다.</p>
         <p>총 {questions.length}개의 문제가 준비되었습니다.</p>
         <button className={styles.primaryButton} onClick={startQuiz}>퀴즈 시작하기</button>
@@ -71,15 +71,28 @@ const PhotoYearQuizPage: NextPage = () => {
   const renderQuestionScreen = () => {
     if (!currentQuestion) return null;
     
+    const imageUrl = currentQuestion.imageUrls && currentQuestion.imageUrls.length > 0 
+      ? currentQuestion.imageUrls[0] 
+      : '';
+    
     return (
       <div className={styles.questionScreen}>
         <div className={styles.photoContainer}>
           <div className={styles.photoWrapper}>
-            <div className={styles.imagePlaceholder}>
-              {currentQuestion.imageUrls && currentQuestion.imageUrls.length > 0 
-                ? `[이미지: ${currentQuestion.imageUrls[0]}]`
-                : '[이미지가 없습니다]'}
-            </div>
+            {imageUrl ? (
+              <div className={styles.imageContainer}>
+                <img 
+                  src={imageUrl}
+                  alt="연도를 맞춰야 하는 사진"
+                  className={styles.photoImage}
+                  style={{ maxWidth: '100%', height: 'auto' }}
+                />
+              </div>
+            ) : (
+              <div className={styles.imagePlaceholder}>
+                [이미지가 없습니다]
+              </div>
+            )}
           </div>
         </div>
         
@@ -87,7 +100,6 @@ const PhotoYearQuizPage: NextPage = () => {
           <p>이 사진은 언제 촬영되었을까요?</p>
         </div>
         
-       
         <button className={styles.primaryButton} onClick={showAnswer}>
           정답 보기
         </button>
@@ -99,14 +111,27 @@ const PhotoYearQuizPage: NextPage = () => {
   const renderAnswerScreen = () => {
     if (!currentQuestion) return null;
     
+    const imageUrl = currentQuestion.imageUrls && currentQuestion.imageUrls.length > 0 
+      ? currentQuestion.imageUrls[0] 
+      : '';
+    
     return (
       <div className={styles.answerScreen}>
         <div className={styles.photoAnswerContainer}>
-          <div className={styles.imagePlaceholder}>
-            {currentQuestion.imageUrls && currentQuestion.imageUrls.length > 0 
-              ? `[이미지: ${currentQuestion.imageUrls[0]}]`
-              : '[이미지가 없습니다]'}
-          </div>
+          {imageUrl ? (
+            <div className={styles.imageContainer}>
+              <img 
+                src={imageUrl}
+                alt="연도를 맞춰야 하는 사진" 
+                className={styles.photoImage}
+                style={{ maxWidth: '100%', height: 'auto' }}
+              />
+            </div>
+          ) : (
+            <div className={styles.imagePlaceholder}>
+              [이미지가 없습니다]
+            </div>
+          )}
         </div>
         
         <div className={styles.answerDetails}>
@@ -147,11 +172,11 @@ const PhotoYearQuizPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>사진 퀴즈 - 촬영 연도</title>
+        <title>스냅 사진 퀴즈 - 촬영 연도</title>
         <meta name="description" content="사진이 촬영된 연도를 맞추는 퀴즈" />
       </Head>
       <QuizLayout
-        title="사진 퀴즈 - 촬영 연도"
+        title="스냅 사진 퀴즈 - 촬영 연도"
         currentQuestion={quizState !== QuizState.READY && quizState !== QuizState.FINISHED ? currentQuestionIndex + 1 : undefined}
         totalQuestions={quizState !== QuizState.READY && quizState !== QuizState.FINISHED ? questions.length : undefined}
       >
