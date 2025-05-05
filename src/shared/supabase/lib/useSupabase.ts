@@ -28,6 +28,14 @@ export const useSupabase = () => {
 
     // 초기 세션 가져오기
     getSession();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   return { session, loading, error, user: session?.user ?? null };
