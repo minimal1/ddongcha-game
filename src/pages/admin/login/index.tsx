@@ -10,7 +10,7 @@ import useAuth from '@/features/admin/auth/lib/useAuth';
  */
 const LoginPage: React.FC = () => {
   const router = useRouter();
-  const {user, loading, signInWithPassword} = useAuth();
+  const { user, loading: authLoading, signInWithPassword } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
@@ -20,12 +20,12 @@ const LoginPage: React.FC = () => {
   // 이미 로그인한 경우 리디렉션
   useEffect(() => {
     if (user) {
-      // 리디렉션 쿼리 파라미터가 있으면 해당 페이지로, 없으면 관리자 페이지로
+      // 리디렉션 파라미터가 있으면 해당 페이지로, 없으면 관리자 페이지로
       router.push((redirect as string) || '/admin');
     }
   }, [user, router, redirect]);
 
-  // 로그인 핸들러
+  // 로그인 처리
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -46,7 +46,7 @@ const LoginPage: React.FC = () => {
         throw error;
       }
       
-      // 로그인 성공 시 로그인 이후 로직은 useEffect에서 처리
+      // 로그인 성공 시 signInWithPassword 함수에서 리디렉션이 처리됨
     } catch (err: any) {
       setError(err.message || '로그인 중 오류가 발생했습니다.');
       console.error('Login error:', err);
@@ -55,8 +55,8 @@ const LoginPage: React.FC = () => {
     }
   };
 
-  // 로딩 중이면 로딩 표시
-  if (loading) {
+  // 로딩 중이면 로딩 화면
+  if (authLoading) {
     return (
       <div className={styles.loadingContainer}>
         <div className={styles.spinner}></div>
@@ -68,14 +68,14 @@ const LoginPage: React.FC = () => {
   return (
     <>
       <Head>
-        <title>로그인 - 똥차 게임 관리자</title>
-        <meta name="description" content="똥차 게임 관리자 로그인 페이지" />
+        <title>로그인 - 똥차 퀴즈 관리자</title>
+        <meta name="description" content="똥차 퀴즈 관리자 로그인 페이지" />
       </Head>
 
       <div className={styles.loginContainer}>
         <div className={styles.loginCard}>
           <h1 className={styles.title}>관리자 로그인</h1>
-          <p className={styles.subtitle}>게임 관리를 위해 로그인해주세요</p>
+          <p className={styles.subtitle}>퀴즈 관리를 위해 로그인하세요</p>
 
           {error && (
             <div className={styles.errorMessage}>
