@@ -4,7 +4,7 @@ import Head from 'next/head';
 import AdminLayout from '@/features/admin/layout/AdminLayout';
 import QuizFormFields from '@/features/admin/quiz/ui/QuizFormFields';
 import { useQuizDetail } from '@/features/admin/quiz/lib/useQuizDetail';
-import { validateQuizForm, QuizFormValues } from '@/features/admin/quiz/lib/quizFormUtils';
+import { validateQuizForm  } from '@/features/admin/quiz/lib/quizFormUtils';
 import styles from './Detail.module.css';
 
 /**

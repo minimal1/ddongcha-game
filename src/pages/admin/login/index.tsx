@@ -19,7 +19,6 @@ const LoginPage: React.FC = () => {
 
   // 이미 로그인한 경우 리디렉션
   useEffect(() => {
-    console.log('Session:', user);
     if (user) {
       // 리디렉션 쿼리 파라미터가 있으면 해당 페이지로, 없으면 관리자 페이지로
       router.push((redirect as string) || '/admin');

@@ -32,7 +32,7 @@ const PhotoYearQuizPage: NextPage = () => {
     if (loading) {
       return (
         <div className={styles.startScreen}>
-          <h2>스냅 사진 퀴즈 데이터 로딩 중...</h2>
+          <h2>사진 퀴즈 데이터 로딩 중...</h2>
           <p>잠시만 기다려주세요.</p>
         </div>
       );
@@ -59,7 +59,7 @@ const PhotoYearQuizPage: NextPage = () => {
 
     return (
       <div className={styles.startScreen}>
-        <h2>스냅 사진 퀴즈 - 촬영 연도</h2>
+        <h2>사진 퀴즈 - 촬영 연도</h2>
         <p>사진이 촬영된 연도를 맞추는 퀴즈입니다.</p>
         <p>총 {questions.length}개의 문제가 준비되었습니다.</p>
         <button className={styles.primaryButton} onClick={startQuiz}>퀴즈 시작하기</button>
@@ -147,11 +147,11 @@ const PhotoYearQuizPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>스냅 사진 퀴즈 - 촬영 연도</title>
+        <title>사진 퀴즈 - 촬영 연도</title>
         <meta name="description" content="사진이 촬영된 연도를 맞추는 퀴즈" />
       </Head>
       <QuizLayout
-        title="스냅 사진 퀴즈 - 촬영 연도"
+        title="사진 퀴즈 - 촬영 연도"
         currentQuestion={quizState !== QuizState.READY && quizState !== QuizState.FINISHED ? currentQuestionIndex + 1 : undefined}
         totalQuestions={quizState !== QuizState.READY && quizState !== QuizState.FINISHED ? questions.length : undefined}
       >
