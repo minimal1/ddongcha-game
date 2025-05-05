@@ -3,7 +3,6 @@ import Head from 'next/head';
 import { useState } from 'react';
 import QuizLayout from '@/features/user/quiz/ui/QuizLayout';
 import { useQuiz, QuizState } from '@/features/user/quiz/lib/useQuiz';
-import { GuessWhoQuestion } from '@/features/user/quiz/model/quiz.model';
 import styles from '@/features/user/quiz/ui/GuessWhoQuiz.module.css';
 import useQuizData from '@/features/user/quiz/lib/useQuizData';
 
@@ -26,7 +25,7 @@ const GuessWhoQuizPage: NextPage = () => {
     showAnswer,
     nextQuestion,
     resetQuiz
-  } = useQuiz<GuessWhoQuestion>({
+  } = useQuiz({
     questions,
   });
 
@@ -145,7 +144,6 @@ const GuessWhoQuizPage: NextPage = () => {
     
     const hasImages = currentQuestion.imageUrls && currentQuestion.imageUrls.length > 0;
     const imageUrl = hasImages ? currentQuestion.imageUrls[currentImageIndex] : '';
-    const isLastImage = !hasImages || currentImageIndex === currentQuestion.imageUrls.length - 1;
     
     return (
       <div className={styles.answerScreen}>
@@ -164,20 +162,6 @@ const GuessWhoQuizPage: NextPage = () => {
             </div>
           )}
         </div>
-        
-        {hasImages && currentQuestion.imageUrls.length > 1 && (
-          <div className={styles.imageNavigation}>
-            <p>사진 {currentImageIndex + 1} / {currentQuestion.imageUrls.length}</p>
-            <button 
-              className={styles.secondaryButton || styles.primaryButton} 
-              onClick={showNextImage}
-              disabled={isLastImage}
-              style={{ opacity: isLastImage ? 0.5 : 1, marginBottom: '10px' }}
-            >
-              다음 사진 보기
-            </button>
-          </div>
-        )}
         
         <div className={styles.answerDetails}>
           <p>정답: <strong>{currentQuestion.answer}</strong></p>
