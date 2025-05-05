@@ -2,10 +2,8 @@ import { NextPage } from 'next';
 import Head from 'next/head';
 import QuizLayout from '@/features/user/quiz/ui/QuizLayout';
 import { useQuiz, QuizState } from '@/features/user/quiz/lib/useQuiz';
-import { PhotoYearQuestion } from '@/features/user/quiz/model/quiz.model';
 import styles from '@/features/user/quiz/ui/PhotoYearQuiz.module.css';
 import useQuizData from '@/features/user/quiz/lib/useQuizData';
-import Image from 'next/image';
 
 const PhotoYearQuizPage: NextPage = () => {
   // Supabase에서 스냅 사진 퀴즈 데이터 가져오기
@@ -23,7 +21,7 @@ const PhotoYearQuizPage: NextPage = () => {
     showAnswer,
     nextQuestion,
     resetQuiz
-  } = useQuiz<PhotoYearQuestion>({
+  } = useQuiz({
     questions,
   });
 
@@ -42,7 +40,7 @@ const PhotoYearQuizPage: NextPage = () => {
       return (
         <div className={styles.startScreen}>
           <h2>오류 발생</h2>
-          <p>스냅 사진 퀴즈 데이터를 불러오는 중 오류가 발생했습니다.</p>
+          <p>사진 퀴즈 데이터를 불러오는 중 오류가 발생했습니다.</p>
           <p>{error.message}</p>
         </div>
       );
@@ -59,7 +57,7 @@ const PhotoYearQuizPage: NextPage = () => {
 
     return (
       <div className={styles.startScreen}>
-        <h2>스냅 사진 퀴즈 - 촬영 연도</h2>
+        <h2>사진 퀴즈 - 촬영 연도</h2>
         <p>사진이 촬영된 연도를 맞추는 퀴즈입니다.</p>
         <p>총 {questions.length}개의 문제가 준비되었습니다.</p>
         <button className={styles.primaryButton} onClick={startQuiz}>퀴즈 시작하기</button>
@@ -172,11 +170,11 @@ const PhotoYearQuizPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>스냅 사진 퀴즈 - 촬영 연도</title>
+        <title>사진 퀴즈 - 촬영 연도</title>
         <meta name="description" content="사진이 촬영된 연도를 맞추는 퀴즈" />
       </Head>
       <QuizLayout
-        title="스냅 사진 퀴즈 - 촬영 연도"
+        title="사진 퀴즈 - 촬영 연도"
         currentQuestion={quizState !== QuizState.READY && quizState !== QuizState.FINISHED ? currentQuestionIndex + 1 : undefined}
         totalQuestions={quizState !== QuizState.READY && quizState !== QuizState.FINISHED ? questions.length : undefined}
       >
