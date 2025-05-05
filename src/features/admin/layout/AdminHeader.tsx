@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useSupabaseContext } from '@/shared/supabase/lib/SupabaseProvider';
 import styles from './AdminHeader.module.css';
+import useAuth from '@/features/admin/auth/lib/useAuth';
 
 /**
  * 관리자 헤더 컴포넌트
  * 
- * 상단 네비게이션과 로그아웃 기능을 제공합니다.
+ * 관리자 네비게이션과 로그아웃 기능을 제공합니다.
  */
 const AdminHeader: React.FC = () => {
   const router = useRouter();
-  const { supabase } = useSupabaseContext();
+  const { signOut } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // 현재 페이지 경로에 따라 활성 메뉴 표시
@@ -20,8 +20,8 @@ const AdminHeader: React.FC = () => {
   // 로그아웃 처리
   const handleLogout = async () => {
     try {
-      await supabase.auth.signOut();
-      router.push('/admin/login');
+      await signOut();
+      // signOut 함수 내에서 리디렉션 처리됨
     } catch (error) {
       console.error('로그아웃 오류:', error);
     }
@@ -41,7 +41,7 @@ const AdminHeader: React.FC = () => {
           </Link>
         </div>
 
-        {/* 데스크톱 메뉴 */}
+        {/* 데스크탑 메뉴 */}
         <nav className={styles.desktopNav}>
           <ul className={styles.navList}>
             <li className={`${styles.navItem} ${isActive('/admin') ? styles.active : ''}`}>
