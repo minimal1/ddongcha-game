@@ -72,13 +72,11 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 800px;
   margin: 0 auto;
 }
 
 .photoContainer {
   width: 100%;
-  max-width: 500px;
   margin-bottom: 1.5rem;
   border-radius: 8px;
   overflow: hidden;
@@ -88,7 +86,6 @@
 .photoWrapper {
   position: relative;
   width: 100%;
-  padding-top: 75%; /* 4:3 비율 */
   background-color: #f6f8fa;
 }
 
@@ -191,7 +188,6 @@
   border-radius: 8px;
   overflow: hidden;
   position: relative;
-  padding-top: 75%; /* 4:3 비율 */
 }
 
 .photoAnswerContainer .imagePlaceholder {
