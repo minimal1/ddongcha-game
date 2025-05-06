@@ -3,34 +3,59 @@
   flex-direction: column;
   min-height: 80vh;
   width: 100%;
+  padding-top: 85px; /* 헤더의 높이만큼 패딩 추가 */
 }
 
 .quizHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
-  margin-bottom: 20px;
-  border-bottom: 1px solid var(--color-border-default);
-  flex-wrap: wrap;
+  padding: 15px 20px;
+  background-color: var(--color-canvas-default);
+  border-bottom: 2px solid var(--color-border-default);
   width: 100%;
+  position: fixed; /* 헤더 고정 */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* 다른 요소 위에 표시 */
+  transition: box-shadow 0.3s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 헤더 내부 좌측 영역 */
+.headerLeft {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* 헤더 내부 우측 영역 */
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 .quizTitle {
   font-size: 2rem;
   margin: 0;
   color: var(--color-fg-default);
-  flex: 1;
+  margin-right: 20px;
 }
 
 .quizProgress {
   background-color: var(--color-canvas-subtle);
   padding: 8px 16px;
   border-radius: 6px;
-  margin-right: 10px;
   color: var(--color-fg-muted);
   font-size: 1.2rem;
   font-weight: bold;
+}
+
+.actionButtonsContainer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
 .quizTimer {
@@ -49,6 +74,7 @@
   align-items: center;
   margin: 0 auto;
   width: 100%;
+  padding: 0 20px;
 }
 
 .backButton {
@@ -56,11 +82,11 @@
   font-size: 1.2rem;
   display: flex;
   align-items: center;
-  margin-left: 15px;
   padding: 8px 16px;
   background-color: var(--color-canvas-subtle);
   border-radius: 6px;
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .backButton:hover {
@@ -72,15 +98,35 @@
 @media (max-width: 768px) {
   .quizHeader {
     flex-direction: column;
-    align-items: flex-start;
+    padding: 10px;
+  }
+  
+  .headerLeft, 
+  .headerRight {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .headerRight {
+    margin-top: 10px;
   }
   
   .quizTitle {
-    margin-bottom: 10px;
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+  }
+  
+  .quizLayout {
+    padding-top: 120px; /* 모바일에서는 헤더 높이가 더 높아짐 */
   }
   
   .backButton {
-    margin-top: 10px;
-    margin-left: 0;
+    font-size: 1rem;
+    padding: 6px 12px;
+  }
+  
+  .quizProgress {
+    font-size: 1rem;
+    padding: 6px 12px;
   }
 }
