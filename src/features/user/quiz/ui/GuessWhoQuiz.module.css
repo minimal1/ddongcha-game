@@ -10,7 +10,7 @@
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 40px;
   background-color: var(--color-canvas-subtle);
   border-radius: 8px;
   border: 1px solid var(--color-border-default);
@@ -20,18 +20,18 @@
   max-width: 600px;
 }
 
-
 .startScreen h2,
 .resultScreen h2 {
-  font-size: 1.8rem;
-  margin-bottom: 20px;
+  font-size: 3rem;
+  margin-bottom: 30px;
   color: var(--color-fg-default);
 }
 
 .startScreen p,
 .resultScreen p {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   color: var(--color-fg-muted);
+  font-size: 1.5rem;
 }
 
 .faceZoomContainer {
@@ -42,10 +42,18 @@
   align-items: center;
 }
 
+.imageContainer {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid var(--color-border-default);
+}
+
 .faceImage {
   width: 100%;
   background-color: var(--color-canvas-default);
-  border: 1px solid var(--color-border-default);
   border-radius: 6px;
   overflow: hidden;
   position: relative;
@@ -61,36 +69,32 @@
   border: 1px dashed var(--color-border-muted);
   color: var(--color-fg-muted);
   font-size: 0.9rem;
-}
-
-.questionText {
-  font-size: 1.2rem;
-  margin: 10px 0 20px;
-  color: var(--color-fg-default);
-}
-
-.optionsGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
+  border-radius: 8px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
 }
 
-.optionButton {
-  padding: 15px 20px;
-  font-size: 1rem;
-  transition: all 0.2s ease;
-  background-color: var(--color-canvas-default);
-  border: 1px solid var(--color-border-default);
+.questionText {
+  font-size: 2rem;
+  margin: 20px 0 30px;
   color: var(--color-fg-default);
-  border-radius: 6px;
-  cursor: pointer;
+  font-weight: 500;
 }
 
-.optionButton:hover {
-  background-color: var(--color-accent-emphasis);
-  color: white;
-  transform: translateY(-2px);
+.imageNavigation {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.imageNavigation p {
+  font-size: 1.2rem;
+  color: var(--color-fg-muted);
+  margin-bottom: 10px;
 }
 
 .faceFullImage {
@@ -120,15 +124,17 @@
 
 .answerDetails {
   background-color: var(--color-canvas-default);
-  padding: 15px 20px;
+  padding: 20px 25px;
   border-radius: 6px;
   margin: 20px 0;
   width: 100%;
   text-align: left;
+  font-size: 1.8rem;
 }
 
 .answerDetails p {
   margin-bottom: 10px;
+  line-height: 1.5;
 }
 
 .scoreDisplay {
@@ -146,8 +152,8 @@
 
 .primaryButton {
   margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 1rem;
+  padding: 15px 30px;
+  font-size: 1.5rem;
   background-color: var(--color-accent-emphasis);
   color: white;
   border-color: var(--color-accent-emphasis);
@@ -155,11 +161,50 @@
   border-radius: 6px;
   border: 1px solid;
   font-weight: 500;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 .primaryButton:hover {
   background-color: #388bfd;
+  transform: translateY(-2px);
+}
+
+.secondaryButton {
+  margin-top: 10px;
+  padding: 12px 24px;
+  font-size: 1.2rem;
+  background-color: var(--color-canvas-default);
+  color: var(--color-fg-default);
+  border: 1px solid var(--color-border-default);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.secondaryButton:hover {
+  background-color: var(--color-border-muted);
+  transform: translateY(-2px);
+}
+
+/* 헤더 액션 버튼 스타일 */
+.headerActionButton {
+  font-size: 1.4rem;
+  padding: 10px 20px;
+  background-color: var(--color-accent-emphasis);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  min-width: 150px;
+  margin-right: 10px;
+}
+
+.headerActionButton:hover {
+  background-color: #388bfd;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .loadingContainer {
@@ -179,8 +224,33 @@
   text-align: center;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 768px) {
   .optionsGrid {
     grid-template-columns: 1fr;
+  }
+  
+  .questionText {
+    font-size: 1.6rem;
+  }
+  
+  .startScreen h2,
+  .resultScreen h2 {
+    font-size: 2.2rem;
+  }
+  
+  .primaryButton {
+    font-size: 1.2rem;
+    padding: 12px 24px;
+  }
+  
+  .headerActionButton {
+    font-size: 1.1rem;
+    padding: 8px 16px;
+    min-width: 120px;
+  }
+  
+  .answerDetails {
+    font-size: 1.4rem;
+    padding: 15px 20px;
   }
 }
