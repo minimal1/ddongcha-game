@@ -4,6 +4,7 @@ import QuizLayout from '@/features/user/quiz/ui/QuizLayout';
 import { useQuiz, QuizState } from '@/features/user/quiz/lib/useQuiz';
 import useQuizData from '@/features/user/quiz/lib/useQuizData';
 import styles from '@/features/user/quiz/ui/TriviaQuiz.module.css';
+import React from 'react';
 
 const TriviaQuizPage: NextPage = () => {
   // Supabase에서 퀴즈 데이터 가져오기
@@ -12,7 +13,7 @@ const TriviaQuizPage: NextPage = () => {
     limit: 50,
   });
 
-  // 퀴즈 훅 사용
+  // 퀴즈 관리 사용
   const {
     currentQuestion,
     currentQuestionIndex,
@@ -25,7 +26,42 @@ const TriviaQuizPage: NextPage = () => {
     questions,
   });
 
-  // 시작 화면 렌더링 - 로딩 상태 추가
+  // 액션 버튼 렌더링 - 게임 상태에 따라 다른 버튼 표시
+  const renderActionButtons = () => {
+    switch (quizState) {
+      case QuizState.QUESTION:
+        return (
+          <button 
+            className={styles.headerActionButton} 
+            onClick={showAnswer}
+          >
+            정답 보기
+          </button>
+        );
+      case QuizState.ANSWER:
+        return (
+          <button 
+            className={styles.headerActionButton} 
+            onClick={nextQuestion}
+          >
+            {currentQuestionIndex < questions.length - 1 ? '다음 문제' : '결과 보기'}
+          </button>
+        );
+      case QuizState.FINISHED:
+        return (
+          <button 
+            className={styles.headerActionButton} 
+            onClick={resetQuiz}
+          >
+            다시 시작하기
+          </button>
+        );
+      default:
+        return null;
+    }
+  };
+
+  // 시작 화면 렌더링 - 로딩 중이거나 오류
   const renderStartScreen = () => {
     if (loading) {
       return (
@@ -49,7 +85,7 @@ const TriviaQuizPage: NextPage = () => {
     if (questions.length === 0) {
       return (
         <div className={styles.startScreen}>
-          <h2>퀴즈 준비</h2>
+          <h2>퀴즈 없음</h2>
           <p>현재 사용 가능한 퀴즈가 없습니다.</p>
         </div>
       );
@@ -58,24 +94,20 @@ const TriviaQuizPage: NextPage = () => {
     return (
       <div className={styles.startScreen}>
         <h2>지식 퀴즈 게임</h2>
-        <p>다양한 분야의 지식 질문을 푸는 퀴즈 게임입니다.</p>
-        <p>총 {questions.length}개의 질문이 준비되었습니다.</p>
+        <p>다양한 분야의 지식 문제를 푸는 퀴즈 게임입니다.</p>
+        <p>총 {questions.length}개의 문제가 준비되었습니다.</p>
         <button className={styles.primaryButton} onClick={startQuiz}>게임 시작하기</button>
       </div>
     );
   };
 
-  // 질문 화면 렌더링
+  // 문제 화면 렌더링
   const renderQuestionScreen = () => {
     if (!currentQuestion) return null;
     
     return (
       <div className={styles.questionScreen}>
         <h2 className={styles.questionText}>{currentQuestion.question}</h2>
-       
-        <button className={styles.primaryButton} onClick={showAnswer}>
-          정답 보기
-        </button>
       </div>
     );
   };
@@ -87,12 +119,9 @@ const TriviaQuizPage: NextPage = () => {
     return (
       <div className={styles.answerScreen}>
         <div className={styles.answerDetails}>
-          <p>질문: {currentQuestion.question}</p>
+          <p>문제: {currentQuestion.question}</p>
           <p>정답: <strong>{currentQuestion.answer}</strong></p>
         </div>
-        <button className={styles.primaryButton} onClick={nextQuestion}>
-          {currentQuestionIndex < questions.length - 1 ? '다음 질문' : '결과 보기'}
-        </button>
       </div>
     );
   };
@@ -100,9 +129,8 @@ const TriviaQuizPage: NextPage = () => {
   // 결과 화면 렌더링
   const renderResultScreen = () => (
     <div className={styles.resultScreen}>
-      <h2>퀴즈 완료</h2>
+      <h2>퀴즈 종료</h2>
       <p>총 {questions.length}개의 문제를 모두 풀었습니다!</p>
-      <button className={styles.primaryButton} onClick={resetQuiz}>다시 시작하기</button>
     </div>
   );
 
@@ -126,12 +154,13 @@ const TriviaQuizPage: NextPage = () => {
     <>
       <Head>
         <title>지식 퀴즈 게임</title>
-        <meta name="description" content="다양한 분야의 지식 질문을 푸는 퀴즈 게임" />
+        <meta name="description" content="다양한 분야의 지식 문제를 푸는 퀴즈 게임" />
       </Head>
       <QuizLayout
         title="지식 퀴즈 게임"
         currentQuestion={quizState !== QuizState.READY && quizState !== QuizState.FINISHED ? currentQuestionIndex + 1 : undefined}
         totalQuestions={quizState !== QuizState.READY && quizState !== QuizState.FINISHED ? questions.length : undefined}
+        actionButtons={renderActionButtons()} // 액션 버튼 추가
       >
         {renderContent()}
       </QuizLayout>
