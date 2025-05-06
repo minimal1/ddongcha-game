@@ -2,7 +2,6 @@ import { NextPage } from 'next';
 import Head from 'next/head';
 import QuizLayout from '@/features/user/quiz/ui/QuizLayout';
 import { useQuiz, QuizState } from '@/features/user/quiz/lib/useQuiz';
-import { MovieQuizQuestion } from '@/features/user/quiz/model/quiz.model';
 import styles from '@/features/user/quiz/ui/MovieQuiz.module.css';
 import useQuizData from '@/features/user/quiz/lib/useQuizData';
 
@@ -22,7 +21,7 @@ const MovieQuizPage: NextPage = () => {
     showAnswer,
     nextQuestion,
     resetQuiz
-  } = useQuiz<MovieQuizQuestion>({
+  } = useQuiz({
     questions,
   });
 

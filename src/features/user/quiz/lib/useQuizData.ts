@@ -93,6 +93,7 @@ export default function useQuizData<T extends QuestionType>({
               return {
                 ...baseQuestion,
                 questionType: "movie",
+                imageUrls: item.image_urls || [],
               } as MovieQuizQuestion;
 
             case "photo-year":
