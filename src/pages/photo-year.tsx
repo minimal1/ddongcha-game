@@ -1,5 +1,6 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
+import React from 'react';
 import QuizLayout from '@/features/user/quiz/ui/QuizLayout';
 import { useQuiz, QuizState } from '@/features/user/quiz/lib/useQuiz';
 import styles from '@/features/user/quiz/ui/PhotoYearQuiz.module.css';
@@ -12,7 +13,7 @@ const PhotoYearQuizPage: NextPage = () => {
     limit: 50,
   });
 
-  // 퀴즈 상태 관리
+  // 퀴즈 관리 사용
   const {
     currentQuestion,
     currentQuestionIndex,
@@ -24,6 +25,41 @@ const PhotoYearQuizPage: NextPage = () => {
   } = useQuiz({
     questions,
   });
+
+  // 액션 버튼 렌더링 - 게임 상태에 따라 다른 버튼 표시
+  const renderActionButtons = () => {
+    switch (quizState) {
+      case QuizState.QUESTION:
+        return (
+          <button 
+            className={styles.headerActionButton} 
+            onClick={showAnswer}
+          >
+            정답 보기
+          </button>
+        );
+      case QuizState.ANSWER:
+        return (
+          <button 
+            className={styles.headerActionButton} 
+            onClick={nextQuestion}
+          >
+            {currentQuestionIndex < questions.length - 1 ? '다음 문제' : '결과 보기'}
+          </button>
+        );
+      case QuizState.FINISHED:
+        return (
+          <button 
+            className={styles.headerActionButton} 
+            onClick={resetQuiz}
+          >
+            다시 시작하기
+          </button>
+        );
+      default:
+        return null;
+    }
+  };
 
   // 퀴즈 시작 화면 렌더링
   const renderStartScreen = () => {
@@ -49,7 +85,7 @@ const PhotoYearQuizPage: NextPage = () => {
     if (questions.length === 0) {
       return (
         <div className={styles.startScreen}>
-          <h2>퀴즈 준비</h2>
+          <h2>퀴즈 없음</h2>
           <p>현재 사용 가능한 퀴즈가 없습니다.</p>
         </div>
       );
@@ -80,11 +116,11 @@ const PhotoYearQuizPage: NextPage = () => {
             {imageUrl ? (
               <div className={styles.imageContainer}>
                 <img 
-                  src={imageUrl}
-                  alt="연도를 맞춰야 하는 사진"
-                  className={styles.photoImage}
-                  style={{ maxWidth: '100%', height: 'auto' }}
-                />
+                    src={imageUrl}
+                    alt="연도를 맞춰야 하는 사진"
+                    className={styles.photoImage}
+                    style={{ maxWidth: '100%', height: 'auto' }}
+                 />
               </div>
             ) : (
               <div className={styles.imagePlaceholder}>
@@ -97,10 +133,6 @@ const PhotoYearQuizPage: NextPage = () => {
         <div className={styles.questionText}>
           <p>이 사진은 언제 촬영되었을까요?</p>
         </div>
-        
-        <button className={styles.primaryButton} onClick={showAnswer}>
-          정답 보기
-        </button>
       </div>
     );
   };
@@ -135,10 +167,6 @@ const PhotoYearQuizPage: NextPage = () => {
         <div className={styles.answerDetails}>
           <p>정답: <strong>{currentQuestion.answer}년</strong></p>
         </div>
-        
-        <button className={styles.primaryButton} onClick={nextQuestion}>
-          {currentQuestionIndex < questions.length - 1 ? '다음 문제' : '결과 보기'}
-        </button>
       </div>
     );
   };
@@ -146,7 +174,8 @@ const PhotoYearQuizPage: NextPage = () => {
   // 결과 화면 렌더링
   const renderResultScreen = () => (
     <div className={styles.resultScreen}>
-      <h2>퀴즈 완료</h2>
+      <h2>퀴즈 종료</h2>
+      <p>총 {questions.length}개의 사진 퀴즈를 완료했습니다!</p>
       <button className={styles.primaryButton} onClick={resetQuiz}>다시 시작하기</button>
     </div>
   );
@@ -177,6 +206,7 @@ const PhotoYearQuizPage: NextPage = () => {
         title="사진 퀴즈 - 촬영 연도"
         currentQuestion={quizState !== QuizState.READY && quizState !== QuizState.FINISHED ? currentQuestionIndex + 1 : undefined}
         totalQuestions={quizState !== QuizState.READY && quizState !== QuizState.FINISHED ? questions.length : undefined}
+        actionButtons={renderActionButtons()} // 액션 버튼 추가
       >
         {renderContent()}
       </QuizLayout>
