@@ -60,7 +60,7 @@ const QuizFormFields: React.FC<QuizFormFieldsProps> = ({
         return <TriviaFields {...commonProps} />;
       
       case 'movie':
-        return <MovieFields {...commonProps} />;
+        return <MovieFields {...commonProps} {...imageProps} />;
       
       case 'photo-year':
         return <PhotoYearFields {...commonProps} {...imageProps} />;

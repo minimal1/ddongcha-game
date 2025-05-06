@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import AdminLayout from '@/features/admin/layout/AdminLayout';
 import QuizFormFields from '@/features/admin/quiz/ui/QuizFormFields';
 import { useQuizDetail } from '@/features/admin/quiz/lib/useQuizDetail';
-import { validateQuizForm  } from '@/features/admin/quiz/lib/quizFormUtils';
+import { QuizFormValues, validateQuizForm  } from '@/features/admin/quiz/lib/quizFormUtils';
 import styles from './Detail.module.css';
 
 /**
@@ -32,7 +32,7 @@ const QuizDetailPage: React.FC = () => {
   } = useQuizDetail(quizId || '');
 
   // 폼 제출 처리
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!quiz) return;
@@ -53,66 +53,61 @@ const QuizDetailPage: React.FC = () => {
       // 업데이트 성공 시 목록 페이지로 이동할지 확인
       alert('퀴즈가 성공적으로 업데이트되었습니다.');
     }
-  };
+  },[quiz, updateQuiz]);
 
   // 삭제 확인 모달 표시
-  const handleDeleteClick = () => {
+  const handleDeleteClick = useCallback(() => {
     setShowDeleteConfirm(true);
-  };
+  }, []);
 
   // 삭제 확인
-  const handleConfirmDelete = async () => {
+  const handleConfirmDelete = useCallback(async () => {
     const success = await deleteQuiz();
     
     if (success) {
       // 삭제 성공 시 목록 페이지로 이동
       router.push('/admin');
     }
-  };
+  },[deleteQuiz, router]);
 
   // 삭제 취소
-  const handleCancelDelete = () => {
+  const handleCancelDelete = useCallback(() => {
     setShowDeleteConfirm(false);
-  };
+  }, []);
 
   // 취소 버튼 클릭 처리
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
     router.push('/admin');
-  };
+  },[router]);
 
   // 폼 필드 변경 핸들러 - 로컬 상태 업데이트로 수정
-  const handleQuestionChange = (value: string) => {
-    if (!quiz) return;
-  
-    setQuiz({
-      ...quiz,
+  const handleQuestionChange = useCallback((value: string) => {
+    setQuiz(prev => ({
+      ...prev as QuizFormValues,
       question: value
-    })
-  };
+    }))
+  }, [setQuiz]);
 
-  const handleAnswerChange = (value: string) => {
-    if (!quiz) return;
-    setQuiz({
-      ...quiz,
+  const handleAnswerChange = useCallback((value: string) => {
+    setQuiz(prev => ({
+      ...prev as QuizFormValues,
       answer: value
-    });
-  };
+    }));
+  }, [setQuiz]);
 
-  const handleHintsChange = (values: string[]) => {
-    if (!quiz) return;
-    setQuiz({
-      ...quiz,
+  const handleHintsChange = useCallback((values: string[]) => {
+    setQuiz(prev => ({
+      ...prev as QuizFormValues,
       hints: values
-    });
-  };
+    }));
+  }, [setQuiz]);
 
-  const handleImageUrlsChange = (urls: string[]) => {
-    if (!quiz) return;
-    setQuiz({
-      ...quiz,
+  const handleImageUrlsChange = useCallback((urls: string[]) => {
+    setQuiz(prev => ({
+      ...prev as QuizFormValues,
       imageUrls: urls
-    });
-  };
+    }));
+  }, [setQuiz]);
 
   return (
     <AdminLayout title="퀴즈 관리">

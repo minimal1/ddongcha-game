@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import AdminLayout from '@/features/admin/layout/AdminLayout';
@@ -27,7 +27,7 @@ const CreateQuizPage: React.FC = () => {
   });
 
   // 폼 제출 처리
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     
     // 폼 유효성 검사
@@ -53,15 +53,15 @@ const CreateQuizPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  },[formValues, router]);
 
   // 취소 버튼 클릭 처리
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
     router.push('/admin');
-  };
+  }, [router]);
 
   // 퀴즈 유형 변경 시 필드 초기화
-  const handleQuestionTypeChange = (type: QuestionType) => {
+  const handleQuestionTypeChange = useCallback((type: QuestionType) => {
     setFormValues({
       questionType: type,
       question: '',
@@ -69,36 +69,36 @@ const CreateQuizPage: React.FC = () => {
       hints: [],
       imageUrls: [],
     });
-  };
+  },[]);
 
   // 각 필드 변경 핸들러
-  const handleQuestionChange = (value: string) => {
+  const handleQuestionChange = useCallback((value: string) => {
     setFormValues(prev => ({
       ...prev,
       question: value
     }));
-  };
+  }, []);
 
-  const handleAnswerChange = (value: string) => {
+  const handleAnswerChange = useCallback((value: string) => {
     setFormValues(prev => ({
       ...prev,
       answer: value
     }));
-  };
+  }, []);
 
-  const handleHintsChange = (values: string[]) => {
+  const handleHintsChange = useCallback((values: string[]) => {
     setFormValues(prev => ({
       ...prev,
       hints: values
     }));
-  };
+  }, []);
 
-  const handleImageUrlsChange = (urls: string[]) => {
+  const handleImageUrlsChange = useCallback((urls: string[]) => {
     setFormValues(prev => ({
       ...prev,
       imageUrls: urls
     }));
-  };
+  }, [] );
 
   return (
     <AdminLayout title="새 퀴즈 만들기">
