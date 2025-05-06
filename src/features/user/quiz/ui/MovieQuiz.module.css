@@ -54,6 +54,35 @@
   margin: 0;
 }
 
+/* 영화 이미지 관련 스타일 */
+.movieImageContainer {
+  width: 100%;
+  margin-bottom: 20px;
+  background-color: var(--color-canvas-default);
+  border-radius: 8px;
+  border: 1px solid var(--color-border-default);
+  overflow: hidden;
+}
+
+.movieImage {
+  width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+.imagePlaceholder {
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-canvas-subtle);
+  color: var(--color-fg-muted);
+  font-size: 1rem;
+  border-radius: 6px;
+}
+
 .optionsGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -165,5 +194,9 @@
   
   .movieContent {
     font-size: 1.3rem;
+  }
+  
+  .movieImage {
+    max-height: 300px;
   }
 }
