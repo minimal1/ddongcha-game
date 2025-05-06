@@ -1,59 +1,92 @@
 .dashboard {
   text-align: center;
+  width: 100%;
 }
 
 .title {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
+  font-size: 4rem;
+  margin-bottom: 1rem;
   color: var(--color-fg-default);
 }
 
 .subtitle {
-  font-size: 1.2rem;
+  font-size: 2rem;
   color: var(--color-fg-muted);
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 .gamesGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-  margin-top: 30px;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 40px;
+  margin-top: 50px;
+  width: 100%;
 }
 
 .gameCard {
   background-color: var(--color-canvas-subtle);
-  border: 1px solid var(--color-border-default);
-  border-radius: 6px;
-  padding: 20px;
+  border: 2px solid var(--color-border-default);
+  border-radius: 12px;
+  padding: 40px 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
   height: 100%;
   color: var(--color-fg-default);
 }
 
 .gameCard:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px);
   border-color: var(--color-accent-fg);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
   text-decoration: none;
 }
 
 .gameIcon {
-  font-size: 2.5rem;
-  margin-bottom: 15px;
+  font-size: 5rem;
+  margin-bottom: 25px;
 }
 
 .gameTitle {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
+  font-size: 2rem;
+  margin-bottom: 20px;
   color: var(--color-fg-default);
 }
 
 .gameDescription {
-  font-size: 0.9rem;
+  font-size: 1.5rem;
   color: var(--color-fg-muted);
   margin: 0;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 3rem;
+  }
+  
+  .subtitle {
+    font-size: 1.5rem;
+  }
+  
+  .gamesGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .gameCard {
+    padding: 30px 20px;
+  }
+  
+  .gameIcon {
+    font-size: 4rem;
+  }
+  
+  .gameTitle {
+    font-size: 1.5rem;
+  }
+  
+  .gameDescription {
+    font-size: 1.2rem;
+  }
 }
