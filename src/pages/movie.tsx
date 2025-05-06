@@ -4,6 +4,7 @@ import QuizLayout from '@/features/user/quiz/ui/QuizLayout';
 import { useQuiz, QuizState } from '@/features/user/quiz/lib/useQuiz';
 import styles from '@/features/user/quiz/ui/MovieQuiz.module.css';
 import useQuizData from '@/features/user/quiz/lib/useQuizData';
+import React from 'react';
 
 const MovieQuizPage: NextPage = () => {
   // Supabase에서 영화 퀴즈 데이터 가져오기
@@ -12,7 +13,7 @@ const MovieQuizPage: NextPage = () => {
     limit: 50,
   });
 
-  // 퀴즈 상태 관리
+  // 퀴즈 관리 사용
   const {
     currentQuestion,
     currentQuestionIndex,
@@ -24,6 +25,41 @@ const MovieQuizPage: NextPage = () => {
   } = useQuiz({
     questions,
   });
+
+  // 액션 버튼 렌더링 - 게임 상태에 따라 다른 버튼 표시
+  const renderActionButtons = () => {
+    switch (quizState) {
+      case QuizState.QUESTION:
+        return (
+          <button 
+            className={styles.headerActionButton} 
+            onClick={showAnswer}
+          >
+            정답 보기
+          </button>
+        );
+      case QuizState.ANSWER:
+        return (
+          <button 
+            className={styles.headerActionButton} 
+            onClick={nextQuestion}
+          >
+            {currentQuestionIndex < questions.length - 1 ? '다음 문제' : '결과 보기'}
+          </button>
+        );
+      case QuizState.FINISHED:
+        return (
+          <button 
+            className={styles.headerActionButton} 
+            onClick={resetQuiz}
+          >
+            다시 시작하기
+          </button>
+        );
+      default:
+        return null;
+    }
+  };
 
   // 퀴즈 시작 화면 렌더링
   const renderStartScreen = () => {
@@ -49,7 +85,7 @@ const MovieQuizPage: NextPage = () => {
     if (questions.length === 0) {
       return (
         <div className={styles.startScreen}>
-          <h2>퀴즈 준비</h2>
+          <h2>퀴즈 없음</h2>
           <p>현재 사용 가능한 퀴즈가 없습니다.</p>
         </div>
       );
@@ -58,7 +94,7 @@ const MovieQuizPage: NextPage = () => {
     return (
       <div className={styles.startScreen}>
         <h2>영화 장면 퀴즈</h2>
-        <p>영화 장면을 보고 영화 제목과 명대사를 맞추는 퀴즈입니다.</p>
+        <p>영화 장면을 보고 영화 제목과 대사를 맞추는 퀴즈입니다.</p>
         <p>총 {questions.length}개의 문제가 준비되었습니다.</p>
         <button className={styles.primaryButton} onClick={startQuiz}>퀴즈 시작하기</button>
       </div>
@@ -76,7 +112,7 @@ const MovieQuizPage: NextPage = () => {
     return (
       <div className={styles.questionScreen}>
         <div className={styles.movieQuestion}>
-          <div className={styles.movieQuestionType}>이 영화의 제목과 명대사는?</div>
+          <div className={styles.movieQuestionType}>이 영화의 제목과 대사는?</div>
           
           {/* 영화 장면 이미지 */}
           <div className={styles.movieImageContainer}>
@@ -93,10 +129,6 @@ const MovieQuizPage: NextPage = () => {
             )}
           </div>
         </div>
-        
-        <button className={styles.primaryButton} onClick={showAnswer}>
-          정답 보기
-        </button>
       </div>
     );
   };
@@ -128,12 +160,8 @@ const MovieQuizPage: NextPage = () => {
         
         <div className={styles.answerDetails}>
           <p>영화 제목: <strong>{currentQuestion.question}</strong></p>
-          <p>명대사: <strong>{currentQuestion.answer}</strong></p>
+          <p>대사: <strong>{currentQuestion.answer}</strong></p>
         </div>
-        
-        <button className={styles.primaryButton} onClick={nextQuestion}>
-          {currentQuestionIndex < questions.length - 1 ? '다음 문제' : '결과 보기'}
-        </button>
       </div>
     );
   };
@@ -141,7 +169,7 @@ const MovieQuizPage: NextPage = () => {
   // 결과 화면 렌더링
   const renderResultScreen = () => (
     <div className={styles.resultScreen}>
-      <h2>퀴즈 완료</h2>
+      <h2>퀴즈 종료</h2>
       <p>총 {questions.length}개의 영화 장면 퀴즈를 완료했습니다!</p>
       <button className={styles.primaryButton} onClick={resetQuiz}>다시 시작하기</button>
     </div>
@@ -166,13 +194,14 @@ const MovieQuizPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>영화 장면 퀴즈 - 똥차에이션 퀴즈</title>
-        <meta name="description" content="영화 장면을 보고 영화 제목과 명대사를 맞추는 퀴즈" />
+        <title>영화 장면 퀴즈 - 똥차에이트 퀴즈</title>
+        <meta name="description" content="영화 장면을 보고 영화 제목과 대사를 맞추는 퀴즈" />
       </Head>
       <QuizLayout
         title="영화 장면 퀴즈"
         currentQuestion={quizState !== QuizState.READY && quizState !== QuizState.FINISHED ? currentQuestionIndex + 1 : undefined}
         totalQuestions={quizState !== QuizState.READY && quizState !== QuizState.FINISHED ? questions.length : undefined}
+        actionButtons={renderActionButtons()} // 액션 버튼 추가
       >
         {renderContent()}
       </QuizLayout>
