@@ -119,7 +119,6 @@ const TriviaQuizPage: NextPage = () => {
     return (
       <div className={styles.answerScreen}>
         <div className={styles.answerDetails}>
-          <p>문제: {currentQuestion.question}</p>
           <p>정답: <strong>{currentQuestion.answer}</strong></p>
         </div>
       </div>

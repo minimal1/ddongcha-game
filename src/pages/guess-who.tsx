@@ -52,30 +52,27 @@ const GuessWhoQuizPage: NextPage = () => {
   // 액션 버튼 렌더링 - 게임 상태에 따라 다른 버튼 표시
   const renderActionButtons = () => {
     switch (quizState) {
-      case QuizState.QUESTION:
-        // 문제 화면에서는 다음 이미지 버튼과 정답 보기 버튼 중 상황에 맞는 것 표시
+      case QuizState.QUESTION: {
         const hasImages = currentQuestion?.imageUrls && currentQuestion.imageUrls.length > 0;
         const isLastImage = !hasImages || currentImageIndex === currentQuestion.imageUrls.length - 1;
         
-        if (!isLastImage) {
           return (
-            <button 
+            <>
+            <button
               className={styles.headerActionButton} 
               onClick={showNextImage}
+              disabled={isLastImage}
             >
               다음 사진 보기
             </button>
-          );
-        } else {
-          return (
-            <button 
+           <button 
               className={styles.headerActionButton} 
               onClick={showAnswer}
             >
               정답 보기
-            </button>
+            </button></>
           );
-        }
+      }
       case QuizState.ANSWER:
         return (
           <button 
