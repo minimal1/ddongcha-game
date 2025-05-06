@@ -8,6 +8,7 @@ interface QuizLayoutProps {
   currentQuestion?: number;
   totalQuestions?: number;
   onBackToDashboard?: () => void;
+  actionButtons?: React.ReactNode; // 각 게임별 액션 버튼을 위한 프로퍼티 추가
 }
 
 const QuizLayout: React.FC<QuizLayoutProps> = ({
@@ -15,20 +16,32 @@ const QuizLayout: React.FC<QuizLayoutProps> = ({
   children,
   currentQuestion,
   totalQuestions,
-  onBackToDashboard
+  onBackToDashboard,
+  actionButtons
 }) => {
   return (
     <div className={styles.quizLayout}>
       <header className={styles.quizHeader}>
-        <h1 className={styles.quizTitle}>{title}</h1>
-        { currentQuestion !== undefined && totalQuestions !== undefined && (
-          <div className={styles.quizProgress}>
-            <span>문제 {currentQuestion}/{totalQuestions}</span>
-          </div>
-        )}
-        <Link href="/" className={styles.backButton} onClick={onBackToDashboard}>
-          ← 대시보드로 돌아가기
-        </Link>
+        <div className={styles.headerLeft}>
+          <h1 className={styles.quizTitle}>{title}</h1>
+          {currentQuestion !== undefined && totalQuestions !== undefined && (
+            <div className={styles.quizProgress}>
+              <span>문제 {currentQuestion}/{totalQuestions}</span>
+            </div>
+          )}
+        </div>
+        
+        <div className={styles.headerRight}>
+          {/* 게임별 액션 버튼을 헤더 오른쪽에 배치 */}
+          {actionButtons && (
+            <div className={styles.actionButtonsContainer}>
+              {actionButtons}
+            </div>
+          )}
+          <Link href="/" className={styles.backButton} onClick={onBackToDashboard}>
+            ← 대시보드로 돌아가기
+          </Link>
+        </div>
       </header>
 
       <main className={styles.quizContent}>
