@@ -1,0 +1,53 @@
+/* 테마 시스템 */
+:root {
+  /* 테마 변수 */
+  --color-accent-fg: var(--theme-accent-fg);
+  --color-canvas-default: var(--theme-canvas-default);
+  --color-canvas-subtle: var(--theme-canvas-subtle);
+  --color-border-default: var(--theme-border-default);
+  --color-border-muted: var(--theme-border-muted);
+  --color-neutral-muted: var(--theme-neutral-muted);
+  --color-accent-emphasis: var(--theme-accent-emphasis);
+  --color-danger-fg: var(--theme-danger-fg);
+  --color-success-fg: var(--theme-success-fg);
+  --color-attention-fg: var(--theme-attention-fg);
+  --color-fg-default: var(--theme-fg-default);
+  --color-fg-muted: var(--theme-fg-muted);
+  --color-fg-subtle: var(--theme-fg-subtle);
+}
+
+/* 다크 테마 (기본값) */
+:root {
+  /* 다크 테마 색상 */
+  --theme-accent-fg: #58a6ff;
+  --theme-canvas-default: #0d1117;
+  --theme-canvas-subtle: #161b22;
+  --theme-border-default: #30363d;
+  --theme-border-muted: #21262d;
+  --theme-neutral-muted: rgba(110, 118, 129, 0.4);
+  --theme-accent-emphasis: #1f6feb;
+  --theme-danger-fg: #f85149;
+  --theme-success-fg: #3fb950;
+  --theme-attention-fg: #d29922;
+  --theme-fg-default: #c9d1d9;
+  --theme-fg-muted: #8b949e;
+  --theme-fg-subtle: #6e7681;
+}
+
+/* 라이트 테마 */
+:root.light-theme {
+  /* 라이트 테마 색상 */
+  --theme-accent-fg: #0969da;
+  --theme-canvas-default: #ffffff;
+  --theme-canvas-subtle: #f6f8fa;
+  --theme-border-default: #d0d7de;
+  --theme-border-muted: #d8dee4;
+  --theme-neutral-muted: rgba(175, 184, 193, 0.2);
+  --theme-accent-emphasis: #0969da;
+  --theme-danger-fg: #cf222e;
+  --theme-success-fg: #2da44e;
+  --theme-attention-fg: #9a6700;
+  --theme-fg-default: #24292f;
+  --theme-fg-muted: #57606a;
+  --theme-fg-subtle: #6e7781;
+}
