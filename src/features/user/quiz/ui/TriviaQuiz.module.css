@@ -8,9 +8,8 @@
   justify-content: center;
   text-align: center;
   width: 100%;
-  max-width: 600px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 40px;
   background-color: var(--color-canvas-subtle);
   border-radius: 8px;
   border: 1px solid var(--color-border-default);
@@ -18,39 +17,41 @@
 
 .startScreen h2,
 .resultScreen h2 {
-  font-size: 1.8rem;
-  margin-bottom: 20px;
+  font-size: 3rem;
+  margin-bottom: 30px;
   color: var(--color-fg-default);
 }
 
 .startScreen p,
 .resultScreen p {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   color: var(--color-fg-muted);
+  font-size: 1.5rem;
 }
 
 .questionText {
-  font-size: 1.5rem;
-  margin-bottom: 30px;
+  font-size: 3rem;
+  margin-bottom: 50px;
   color: var(--color-fg-default);
+  line-height: 1.3;
 }
 
 .optionsGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 15px;
+  gap: 25px;
   width: 100%;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .optionButton {
-  padding: 15px 20px;
-  font-size: 1rem;
+  padding: 25px 30px;
+  font-size: 1.5rem;
   transition: all 0.2s ease;
   background-color: var(--color-canvas-default);
   border: 1px solid var(--color-border-default);
   color: var(--color-fg-default);
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
 }
 
@@ -61,8 +62,8 @@
 }
 
 .answerScreen h2 {
-  font-size: 1.8rem;
-  margin-bottom: 20px;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
 }
 
 .correctAnswer {
@@ -75,39 +76,41 @@
 
 .answerDetails {
   background-color: var(--color-canvas-default);
-  padding: 15px 20px;
-  border-radius: 6px;
-  margin: 20px 0;
+  padding: 25px 30px;
+  border-radius: 8px;
+  margin: 30px 0;
   width: 100%;
   text-align: left;
+  font-size: 1.5rem;
 }
 
 .answerDetails p {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  line-height: 1.5;
 }
 
 .scoreDisplay {
-  font-size: 1.2rem;
+  font-size: 1.8rem;
   background-color: var(--color-canvas-default);
-  padding: 20px;
-  border-radius: 6px;
-  margin: 20px 0;
+  padding: 30px;
+  border-radius: 8px;
+  margin: 30px 0;
   width: 100%;
 }
 
 .scoreDisplay p {
-  margin: 10px 0;
+  margin: 15px 0;
 }
 
 .primaryButton {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 1rem;
+  margin-top: 30px;
+  padding: 15px 30px;
+  font-size: 1.5rem;
   background-color: var(--color-accent-emphasis);
   color: white;
   border-color: var(--color-accent-emphasis);
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 8px;
   border: 1px solid;
   font-weight: 500;
   transition: background-color 0.2s;
@@ -115,6 +118,7 @@
 
 .primaryButton:hover {
   background-color: #388bfd;
+  transform: translateY(-2px);
 }
 
 .loadingContainer {
@@ -122,20 +126,36 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px;
+  padding: 60px;
+  font-size: 1.5rem;
 }
 
 .errorMessage {
   color: var(--color-danger-fg);
   background-color: rgba(248, 81, 73, 0.1);
-  padding: 15px;
-  border-radius: 6px;
-  margin: 20px 0;
+  padding: 25px;
+  border-radius: 8px;
+  margin: 30px 0;
   text-align: center;
+  font-size: 1.5rem;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 768px) {
   .optionsGrid {
     grid-template-columns: 1fr;
+  }
+  
+  .questionText {
+    font-size: 2.2rem;
+  }
+  
+  .startScreen h2,
+  .resultScreen h2 {
+    font-size: 2.5rem;
+  }
+  
+  .primaryButton,
+  .optionButton {
+    font-size: 1.2rem;
   }
 }
