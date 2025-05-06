@@ -5,6 +5,7 @@ import QuizLayout from '@/features/user/quiz/ui/QuizLayout';
 import { useQuiz, QuizState } from '@/features/user/quiz/lib/useQuiz';
 import styles from '@/features/user/quiz/ui/GuessWhoQuiz.module.css';
 import useQuizData from '@/features/user/quiz/lib/useQuizData';
+import React from 'react';
 
 const GuessWhoQuizPage: NextPage = () => {
   // 현재 보고 있는 이미지 인덱스를 관리하는 상태
@@ -16,7 +17,7 @@ const GuessWhoQuizPage: NextPage = () => {
     limit: 50,
   });
 
-  // 퀴즈 상태 관리
+  // 퀴즈 관리 사용
   const {
     currentQuestion,
     currentQuestionIndex,
@@ -29,7 +30,7 @@ const GuessWhoQuizPage: NextPage = () => {
     questions,
   });
 
-  // 다음 이미지로 이동하는 함수
+  // 다음 이미지로 전환하는 함수
   const showNextImage = () => {
     if (currentQuestion && currentImageIndex < currentQuestion.imageUrls.length - 1) {
       setCurrentImageIndex(prevIndex => prevIndex + 1);
@@ -46,6 +47,56 @@ const GuessWhoQuizPage: NextPage = () => {
   const handleStartQuiz = () => {
     setCurrentImageIndex(0);
     startQuiz();
+  };
+
+  // 액션 버튼 렌더링 - 게임 상태에 따라 다른 버튼 표시
+  const renderActionButtons = () => {
+    switch (quizState) {
+      case QuizState.QUESTION:
+        // 문제 화면에서는 다음 이미지 버튼과 정답 보기 버튼 중 상황에 맞는 것 표시
+        const hasImages = currentQuestion?.imageUrls && currentQuestion.imageUrls.length > 0;
+        const isLastImage = !hasImages || currentImageIndex === currentQuestion.imageUrls.length - 1;
+        
+        if (!isLastImage) {
+          return (
+            <button 
+              className={styles.headerActionButton} 
+              onClick={showNextImage}
+            >
+              다음 사진 보기
+            </button>
+          );
+        } else {
+          return (
+            <button 
+              className={styles.headerActionButton} 
+              onClick={showAnswer}
+            >
+              정답 보기
+            </button>
+          );
+        }
+      case QuizState.ANSWER:
+        return (
+          <button 
+            className={styles.headerActionButton} 
+            onClick={handleNextQuestion}
+          >
+            {currentQuestionIndex < questions.length - 1 ? '다음 문제' : '결과 보기'}
+          </button>
+        );
+      case QuizState.FINISHED:
+        return (
+          <button 
+            className={styles.headerActionButton} 
+            onClick={resetQuiz}
+          >
+            다시 시작하기
+          </button>
+        );
+      default:
+        return null;
+    }
   };
 
   // 퀴즈 시작 화면 렌더링
@@ -72,7 +123,7 @@ const GuessWhoQuizPage: NextPage = () => {
     if (questions.length === 0) {
       return (
         <div className={styles.startScreen}>
-          <h2>퀴즈 준비</h2>
+          <h2>퀴즈 없음</h2>
           <p>현재 사용 가능한 퀴즈가 없습니다.</p>
         </div>
       );
@@ -80,8 +131,8 @@ const GuessWhoQuizPage: NextPage = () => {
     
     return (
       <div className={styles.startScreen}>
-        <h2>인물 사진 퀴즈 - 누구 일까</h2>
-        <p>확대된 얼굴 사진에서 누구 일까를 맞추는 퀴즈입니다.</p>
+        <h2>인물 사진 퀴즈 - 힌트 맞추기</h2>
+        <p>확대된 얼굴 사진에서 힌트 맞추기를 통해 인물을 맞추는 퀴즈입니다.</p>
         <p>총 {questions.length}개의 문제가 준비되었습니다.</p>
         <button className={styles.primaryButton} onClick={handleStartQuiz}>퀴즈 시작하기</button>
       </div>
@@ -120,20 +171,14 @@ const GuessWhoQuizPage: NextPage = () => {
         {hasImages && currentQuestion.imageUrls.length > 1 && (
           <div className={styles.imageNavigation}>
             <p>사진 {currentImageIndex + 1} / {currentQuestion.imageUrls.length}</p>
-            <button 
-              className={styles.secondaryButton || styles.primaryButton} 
-              onClick={showNextImage}
-              disabled={isLastImage}
-              style={{ opacity: isLastImage ? 0.5 : 1, marginBottom: '10px' }}
-            >
-              다음 사진 보기
-            </button>
           </div>
         )}
         
-        <button className={styles.primaryButton} onClick={showAnswer}>
-          정답 보기
-        </button>
+        {isLastImage && (
+          <button className={styles.primaryButton} onClick={showAnswer}>
+            정답 보기
+          </button>
+        )}
       </div>
     );
   };
@@ -167,10 +212,6 @@ const GuessWhoQuizPage: NextPage = () => {
         <div className={styles.answerDetails}>
           <p>정답: <strong>{currentQuestion.answer}</strong></p>
         </div>
-        
-        <button className={styles.primaryButton} onClick={handleNextQuestion}>
-          {currentQuestionIndex < questions.length - 1 ? '다음 문제' : '결과 보기'}
-        </button>
       </div>
     );
   };
@@ -178,7 +219,8 @@ const GuessWhoQuizPage: NextPage = () => {
   // 결과 화면 렌더링
   const renderResultScreen = () => (
     <div className={styles.resultScreen}>
-      <h2>퀴즈 완료</h2>
+      <h2>퀴즈 종료</h2>
+      <p>총 {questions.length}개의 인물 퀴즈를 완료했습니다!</p>
       <button className={styles.primaryButton} onClick={resetQuiz}>다시 시작하기</button>
     </div>
   );
@@ -202,13 +244,14 @@ const GuessWhoQuizPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>인물 사진 퀴즈 - 누구 일까 - 똥차에이션 퀴즈</title>
-        <meta name="description" content="확대된 얼굴 사진을 보고 누구인지 맞추는 퀴즈" />
+        <title>인물 사진 퀴즈 - 힌트 맞추기 - 똥차에이트 퀴즈</title>
+        <meta name="description" content="확대된 얼굴 사진을 보고 힌트를 통해 인물을 맞추는 퀴즈" />
       </Head>
       <QuizLayout
-        title="인물 사진 퀴즈 - 누구 맞추기"
+        title="인물 사진 퀴즈 - 힌트 맞추기"
         currentQuestion={quizState !== QuizState.READY && quizState !== QuizState.FINISHED ? currentQuestionIndex + 1 : undefined}
         totalQuestions={quizState !== QuizState.READY && quizState !== QuizState.FINISHED ? questions.length : undefined}
+        actionButtons={renderActionButtons()} // 액션 버튼 추가
       >
         {renderContent()}
       </QuizLayout>
