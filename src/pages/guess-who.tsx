@@ -143,7 +143,7 @@ const GuessWhoQuizPage: NextPage = () => {
     if (!currentQuestion) return null;
     
     const hasImages = currentQuestion.imageUrls && currentQuestion.imageUrls.length > 0;
-    const imageUrl = hasImages ? currentQuestion.imageUrls[currentImageIndex] : '';
+    const imageUrl = hasImages ? currentQuestion.imageUrls[currentQuestion.imageUrls.length-1] : '';
     
     return (
       <div className={styles.answerScreen}>
@@ -153,6 +153,7 @@ const GuessWhoQuizPage: NextPage = () => {
               <img 
                 src={imageUrl}
                 alt="인물 사진" 
+                className={styles.faceImage}
                 style={{ maxWidth: '100%', height: 'auto' }}
               />
             </div>
