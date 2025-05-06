@@ -1,5 +1,6 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { QuizQuestion } from "../model/quiz.model";
+import logQuizInfo from "./quizUtil";
 
 // 퀴즈 상태 타입
 export enum QuizState {
@@ -56,6 +57,11 @@ export function useQuiz<T extends QuizQuestion>({
     setQuizState(QuizState.READY);
     setCurrentQuestionIndex(0);
   }, []);
+
+  useEffect(() => {
+    if (!currentQuestion || quizState !== QuizState.QUESTION) return;
+    logQuizInfo(currentQuestion);
+  }, [currentQuestion, quizState]);
 
   return {
     currentQuestion,
