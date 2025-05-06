@@ -80,16 +80,15 @@ const MovieQuizPage: NextPage = () => {
           <div className={styles.movieQuestionType}>이 영화의 제목과 명대사는?</div>
           
           {/* 영화 장면 이미지 */}
-          <div className={styles.movieImageContainer || styles.movieQuestionContent}>
+          <div className={styles.movieImageContainer}>
             {imageUrl ? (
               <img 
                 src={imageUrl}
                 alt="영화 장면"
-                className={styles.movieImage || styles.movieContent}
-                style={{ maxWidth: '100%', height: 'auto', borderRadius: '8px', marginBottom: '10px' }}
+                className={styles.movieImage}
               />
             ) : (
-              <div className={styles.imagePlaceholder || styles.movieContent}>
+              <div className={styles.imagePlaceholder}>
                 [이미지가 없습니다]
               </div>
             )}
@@ -114,13 +113,12 @@ const MovieQuizPage: NextPage = () => {
     return (
       <div className={styles.answerScreen}>
         {/* 영화 장면 이미지 */}
-        <div className={styles.movieImageContainer || styles.answerDetails}>
+        <div className={styles.movieImageContainer}>
           {imageUrl ? (
             <img 
               src={imageUrl}
               alt="영화 장면"
               className={styles.movieImage}
-              style={{ maxWidth: '100%', height: 'auto', borderRadius: '8px', marginBottom: '10px' }}
             />
           ) : (
             <div className={styles.imagePlaceholder}>
