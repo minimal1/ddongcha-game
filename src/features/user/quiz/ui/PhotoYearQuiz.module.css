@@ -1,6 +1,25 @@
-/* PhotoYearQuiz 스타일 - GitHub theme */
+.startScreen,
+.questionScreen,
+.answerScreen,
+.resultScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px;
+  background-color: var(--color-canvas-subtle);
+  border-radius: 8px;
+  border: 1px solid var(--color-border-default);
+}
 
-/* 공통 스타일 */
+.answerScreen {
+  max-width: 600px;
+}
+
 .loadingContainer,
 .errorMessage {
   display: flex;
@@ -10,70 +29,30 @@
   text-align: center;
   padding: 2rem;
   margin: 1rem;
-  background-color: #f6f8fa;
+  background-color: var(--color-canvas-subtle);
   border-radius: 6px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .errorMessage {
-  color: #d73a49;
-  border: 1px solid #f9d0d0;
-  background-color: #fff0f0;
+  color: var(--color-danger-fg);
+  border: 1px solid var(--color-danger-fg);
+  background-color: rgba(248, 81, 73, 0.1);
 }
 
-/* 시작 화면 */
-.startScreen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 2rem;
-  max-width: 600px;
-  margin: 0 auto;
+.startScreen h2,
+.resultScreen h2 {
+  font-size: 3rem;
+  margin-bottom: 30px;
+  color: var(--color-fg-default);
 }
 
-.startScreen h2 {
-  font-size: 1.75rem;
-  margin-bottom: 1.5rem;
-  color: #24292e;
-}
-
-.startScreen p {
-  margin-bottom: 1rem;
-  color: #586069;
+.startScreen p,
+.resultScreen p {
+  margin-bottom: 15px;
+  color: var(--color-fg-muted);
+  font-size: 1.5rem;
   line-height: 1.5;
-}
-
-.primaryButton {
-  background-color: #2ea44f;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  margin-top: 1rem;
-  transition: background-color 0.2s;
-}
-
-.primaryButton:hover {
-  background-color: #2c974b;
-}
-
-.primaryButton:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(46, 164, 79, 0.5);
-}
-
-/* 질문 화면 */
-.questionScreen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
 }
 
 .photoContainer {
@@ -87,21 +66,36 @@
 .photoWrapper {
   position: relative;
   width: 100%;
-  background-color: #f6f8fa;
+  background-color: var(--color-canvas-default);
+}
+
+.imageContainer {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid var(--color-border-default);
+}
+
+.photoImage {
+  width: 100%;
+  display: block;
+  border-radius: 6px;
 }
 
 .imagePlaceholder {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
   width: 100%;
-  height: 100%;
+  height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.875rem;
-  color: #586069;
-  border: 1px dashed #d1d5da;
+  font-size: 1rem;
+  color: var(--color-fg-muted);
+  border: 1px dashed var(--color-border-muted);
+  border-radius: 8px;
+  background-color: var(--color-canvas-default);
 }
 
 .questionText {
@@ -110,14 +104,15 @@
 }
 
 .questionText p {
-  font-size: 1.25rem;
-  color: #24292e;
+  font-size: 2rem;
+  color: var(--color-fg-default);
   margin-bottom: 0.5rem;
+  font-weight: 500;
 }
 
 .yearRange {
-  font-size: 1rem;
-  color: #586069;
+  font-size: 1.2rem;
+  color: var(--color-fg-muted);
   font-style: italic;
 }
 
@@ -131,34 +126,19 @@
 
 .optionButton {
   padding: 1rem;
-  background-color: #f6f8fa;
-  border: 1px solid #d1d5da;
+  background-color: var(--color-canvas-default);
+  border: 1px solid var(--color-border-default);
   border-radius: 6px;
-  font-size: 1.125rem;
-  color: #24292e;
+  font-size: 1.2rem;
+  color: var(--color-fg-default);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .optionButton:hover {
-  background-color: #f0f3f6;
-  border-color: #bbb;
-}
-
-.optionButton:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(3, 102, 214, 0.3);
-}
-
-/* 정답 화면 */
-.answerScreen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  text-align: center;
+  background-color: var(--color-accent-emphasis);
+  color: white;
+  transform: translateY(-2px);
 }
 
 .correctAnswer,
@@ -171,15 +151,15 @@
 }
 
 .correctAnswer {
-  background-color: #e6ffec;
-  color: #22863a;
-  border: 1px solid #b4e6c8;
+  background-color: rgba(0, 200, 0, 0.1);
+  color: var(--color-success-fg);
+  border: 1px solid var(--color-success-fg);
 }
 
 .wrongAnswer {
-  background-color: #ffebe9;
-  color: #d73a49;
-  border: 1px solid #f9d0d0;
+  background-color: rgba(255, 0, 0, 0.1);
+  color: var(--color-danger-fg);
+  border: 1px solid var(--color-danger-fg);
 }
 
 .photoAnswerContainer {
@@ -191,52 +171,106 @@
   position: relative;
 }
 
-.photoAnswerContainer .imagePlaceholder {
-  background-color: #f6f8fa;
-}
-
 .answerDetails {
   margin-bottom: 1.5rem;
+  background-color: var(--color-canvas-default);
+  padding: 20px 25px;
+  border-radius: 6px;
+  width: 100%;
+  text-align: center;
 }
 
 .answerDetails p {
   margin-bottom: 0.5rem;
-  font-size: 1.125rem;
-  color: #24292e;
-}
-
-/* 결과 화면 */
-.resultScreen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.resultScreen h2 {
-  font-size: 1.75rem;
-  margin-bottom: 1.5rem;
-  color: #24292e;
+  font-size: 1.8rem;
+  color: var(--color-fg-default);
 }
 
 .scoreDisplay {
   margin-bottom: 2rem;
   padding: 1.5rem;
-  background-color: #f6f8fa;
+  background-color: var(--color-canvas-default);
   border-radius: 6px;
-  border: 1px solid #d1d5da;
+  border: 1px solid var(--color-border-default);
   width: 100%;
 }
 
 .scoreDisplay p {
   margin-bottom: 0.75rem;
   font-size: 1.25rem;
-  color: #24292e;
+  color: var(--color-fg-default);
 }
 
 .scoreDisplay p:last-child {
   margin-bottom: 0;
+}
+
+.primaryButton {
+  margin-top: 20px;
+  padding: 15px 30px;
+  font-size: 1.5rem;
+  background-color: var(--color-accent-emphasis);
+  color: white;
+  border-color: var(--color-accent-emphasis);
+  cursor: pointer;
+  border-radius: 6px;
+  border: 1px solid;
+  font-weight: 500;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.primaryButton:hover {
+  background-color: #388bfd;
+  transform: translateY(-2px);
+}
+
+/* 헤더 액션 버튼 스타일 */
+.headerActionButton {
+  font-size: 1.4rem;
+  padding: 10px 20px;
+  background-color: var(--color-accent-emphasis);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  min-width: 150px;
+  margin-right: 10px;
+}
+
+.headerActionButton:hover {
+  background-color: #388bfd;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+  .optionsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .questionText p {
+    font-size: 1.6rem;
+  }
+  
+  .startScreen h2,
+  .resultScreen h2 {
+    font-size: 2.2rem;
+  }
+  
+  .primaryButton {
+    font-size: 1.2rem;
+    padding: 12px 24px;
+  }
+  
+  .headerActionButton {
+    font-size: 1.1rem;
+    padding: 8px 16px;
+    min-width: 120px;
+  }
+  
+  .answerDetails p {
+    font-size: 1.4rem;
+  }
 }
