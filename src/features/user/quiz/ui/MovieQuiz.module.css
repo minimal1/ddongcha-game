@@ -10,7 +10,7 @@
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 40px;
   background-color: var(--color-canvas-subtle);
   border-radius: 8px;
   border: 1px solid var(--color-border-default);
@@ -22,15 +22,16 @@
 
 .startScreen h2,
 .resultScreen h2 {
-  font-size: 1.8rem;
-  margin-bottom: 20px;
+  font-size: 3rem;
+  margin-bottom: 30px;
   color: var(--color-fg-default);
 }
 
 .startScreen p,
 .resultScreen p {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   color: var(--color-fg-muted);
+  font-size: 1.5rem;
 }
 
 .movieQuestion {
@@ -39,8 +40,8 @@
 }
 
 .movieQuestionType {
-  font-size: 1.2rem;
-  margin-bottom: 15px;
+  font-size: 2rem;
+  margin-bottom: 20px;
   color: var(--color-accent-fg);
   font-weight: 500;
 }
@@ -136,10 +137,12 @@
   margin: 20px 0;
   width: 100%;
   text-align: left;
+  font-size: 1.5rem;
 }
 
 .answerDetails p {
   margin-bottom: 10px;
+  line-height: 1.5;
 }
 
 .scoreDisplay {
@@ -157,8 +160,8 @@
 
 .primaryButton {
   margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 1rem;
+  padding: 15px 30px;
+  font-size: 1.5rem;
   background-color: var(--color-accent-emphasis);
   color: white;
   border-color: var(--color-accent-emphasis);
@@ -166,11 +169,33 @@
   border-radius: 6px;
   border: 1px solid;
   font-weight: 500;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 .primaryButton:hover {
   background-color: #388bfd;
+  transform: translateY(-2px);
+}
+
+/* 헤더 액션 버튼 스타일 */
+.headerActionButton {
+  font-size: 1.4rem;
+  padding: 10px 20px;
+  background-color: var(--color-accent-emphasis);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  min-width: 150px;
+  margin-right: 10px;
+}
+
+.headerActionButton:hover {
+  background-color: #388bfd;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .loadingContainer {
@@ -190,7 +215,7 @@
   text-align: center;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 768px) {
   .optionsGrid {
     grid-template-columns: 1fr;
   }
@@ -201,5 +226,29 @@
   
   .movieImage {
     max-height: 300px;
+  }
+  
+  .startScreen h2,
+  .resultScreen h2 {
+    font-size: 2.2rem;
+  }
+  
+  .movieQuestionType {
+    font-size: 1.6rem;
+  }
+  
+  .primaryButton {
+    font-size: 1.2rem;
+    padding: 12px 24px;
+  }
+  
+  .headerActionButton {
+    font-size: 1.1rem;
+    padding: 8px 16px;
+    min-width: 120px;
+  }
+  
+  .answerDetails {
+    font-size: 1.2rem;
   }
 }
