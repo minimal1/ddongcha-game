@@ -113,12 +113,33 @@
   border-radius: 8px;
   border: 1px solid;
   font-weight: 500;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 .primaryButton:hover {
   background-color: #388bfd;
   transform: translateY(-2px);
+}
+
+/* 헤더 액션 버튼 스타일 */
+.headerActionButton {
+  font-size: 1.4rem;
+  padding: 10px 20px;
+  background-color: var(--color-accent-emphasis);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  min-width: 150px;
+  margin-right: 10px;
+}
+
+.headerActionButton:hover {
+  background-color: #388bfd;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .loadingContainer {
@@ -157,5 +178,11 @@
   .primaryButton,
   .optionButton {
     font-size: 1.2rem;
+  }
+  
+  .headerActionButton {
+    font-size: 1.1rem;
+    padding: 8px 16px;
+    min-width: 120px;
   }
 }
