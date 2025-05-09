@@ -15,11 +15,12 @@ interface GuessWhoFieldsProps {
   disabled?: boolean;
 }
 
+const IMAGE_COUNT = 4; // 업로드할 이미지 수
 /**
  * 인물 맞추기 퀴즈(Guess-who) 필드 컴포넌트
  * 
  * 인물 맞추기 퀴즈에 필요한 필드들을 제공합니다.
- * - 이미지 업로드 기능 (3장의 인물 사진)
+ * - 이미지 업로드 기능 (n장의 인물 사진)
  * - 공통 필드 (문제, 정답, 힌트)
  */
 const GuessWhoFields: React.FC<GuessWhoFieldsProps> = ({
@@ -56,18 +57,18 @@ const GuessWhoFields: React.FC<GuessWhoFieldsProps> = ({
         <label className={styles.label}>
           인물 사진
           <span className={styles.required}>*</span>
-          <span className={styles.helpText}>(3장)</span>
+          <span className={styles.helpText}>({IMAGE_COUNT}장)</span>
         </label>
         <ImageUploader
           questionType="guess-who"
           initialImages={imageUrls}
           onChange={onImageUrlsChange}
-          maxImages={3}
+          maxImages={IMAGE_COUNT}
           disabled={disabled}
         />
         {imageUrls.length === 0 && <p className={styles.errorMessage}>사진을 업로드해주세요.</p>}
-        {imageUrls.length > 0 && imageUrls.length < 3 && (
-          <p className={styles.warningMessage}>인물 사진은 3장을 업로드하는 것을 권장합니다.</p>
+        {imageUrls.length > 0 && imageUrls.length < IMAGE_COUNT && (
+          <p className={styles.warningMessage}>인물 사진은 {IMAGE_COUNT}장을 업로드하는 것을 권장합니다.</p>
         )}
       </div>
       
